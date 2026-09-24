@@ -1,40 +1,44 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
-import { LoginContext } from './context/LoginContext';
-import { utilisateur } from './scripts/utilisateur';
+import GestionObjetUtilisateur from './components/GestionObjetUtilisateur';
+import {LoginContext} from './context/LoginContext';
+import {utilisateur} from './scripts/utilisateur';
+import Acceuil from "./components/Acceuil.jsx";
+import ModuleEchange from "./components/ModuleEchange.jsx";
 
 function App() {
-  const [login, setLogin] = useState(null);
+    const [login, setLogin] = useState(null);
+    const [page, setPage] = useState('accueil');
 
-  const connecter = (nom, motDePasse) => {
-      const trouve = utilisateur.find(
-          (u) =>
-              u.nom.toLowerCase() === nom.trim().toLowerCase() &&
-              u.motDePasse === motDePasse
-      );
+    const connecter = (nom, motDePasse) => {
+        const trouve = utilisateur.find(
+            (u) =>
+                u.nom.toLowerCase() === nom.trim().toLowerCase() &&
+                u.motDePasse === motDePasse
+        );
 
-      if (!trouve) {
-          return false;
-      }
+        if (!trouve) {
+            return false;
+        }
 
-      setLogin({ id: trouve.id, nom: trouve.nom });
-      return true;
-  };
+        setLogin({id: trouve.id, nom: trouve.nom});
+        return true;
+    };
 
-  const deconnecter = () => {
-      setLogin(null);
-  };
+    const deconnecter = () => {
+        setLogin(null);
+        setPage('accueil');
+    };
 
-  return (
-    <LoginContext.Provider value={{ login, connecter, deconnecter }}>
-        <ResponsiveAppBar />
+    return (
+        <LoginContext.Provider value={{login, connecter, deconnecter}}>
+            <ResponsiveAppBar onNavigate={setPage}/>
 
-        <div>
-            <h1>Mon site d'échange</h1>
-            <p>Bienvenue sur mon application (test de structure)</p>
-        </div>
-    </LoginContext.Provider>
-  )
+            {page === 'accueil' && <Acceuil/>}
+            {page === 'echanges' && <ModuleEchange/>}
+            {page === 'objets' && <GestionObjetUtilisateur/>}
+        </LoginContext.Provider>
+    )
 }
 
 export default App
