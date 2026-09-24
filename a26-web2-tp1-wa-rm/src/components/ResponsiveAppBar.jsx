@@ -12,13 +12,24 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import ConnectionUtilisateur from './ConnectionUtilisateur';
+import { loginContext } from '../context/LoginContext';
 
-const pages = ['Échanges', 'Pricing'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+    { nom: 'Échanges', key: 'echanges' },
+    { nom: 'Objets', key: 'objets' },
+]; // Admin
+const settingsConnecte = ['Logout'];
+const settingsDeconnecte = ['Login'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({ onNavigate }) {
+    const { login, deconnecter } = loginContext();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [dialogLoginOuvert, setDialogLoginOuvert] = React.useState(false);
+
+    const settings = login ? settingsConnecte : settingsDeconnecte;
+    const pagesVisibles = login ? pages : [];
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -34,6 +45,21 @@ function ResponsiveAppBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleNavigate = (key) => {
+        handleCloseNavMenu();
+        onNavigate(key);
+    };
+
+    const handleLoginMenu = (setting) => {
+        handleCloseUserMenu();
+
+        if (setting === 'Login') {
+            setDialogLoginOuvert(true);
+        } else if (setting === 'Logout') {
+            deconnecter();
+        }
     };
 
     return (
@@ -54,6 +80,10 @@ function ResponsiveAppBar() {
                         noWrap
                         component="a"
                         href="/"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onNavigate('accueil');
+                        }}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -74,16 +104,18 @@ function ResponsiveAppBar() {
                             display: { xs: 'flex', md: 'none' },
                         }}
                     >
-                        <IconButton
-                            size="large"
-                            aria-label="open navigation menu"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        {login && (
+                            <IconButton
+                                size="large"
+                                aria-label="open navigation menu"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        )}
 
                         <Menu
                             id="menu-appbar"
@@ -103,13 +135,13 @@ function ResponsiveAppBar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {pagesVisibles.map((page) => (
                                 <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
+                                    key={page.key}
+                                    onClick={() => handleNavigate(page.key)}
                                 >
                                     <Typography sx={{ textAlign: 'center' }}>
-                                        {page}
+                                        {page.nom}
                                     </Typography>
                                 </MenuItem>
                             ))}
@@ -129,6 +161,10 @@ function ResponsiveAppBar() {
                         noWrap
                         component="a"
                         href="/"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onNavigate('accueil');
+                        }}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -150,32 +186,31 @@ function ResponsiveAppBar() {
                             display: { xs: 'none', md: 'flex' },
                         }}
                     >
-                        {pages.map((page) => (
+                        {pagesVisibles.map((page) => (
                             <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
+                                key={page.key}
+                                onClick={() => handleNavigate(page.key)}
                                 sx={{
                                     my: 2,
                                     color: 'white',
                                     display: 'block',
                                 }}
                             >
-                                {page}
+                                {page.nom}
                             </Button>
                         ))}
                     </Box>
 
                     {/* User menu */}
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title={login ? login.nom : 'Non connecté'}>
                             <IconButton
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                <Avatar
-                                    alt="User"
-                                    src="/static/images/avatar/2.jpg"
-                                />
+                                <Avatar alt={login ? login.nom : 'Invité'}>
+                                    {login ? login.nom[0] : null}
+                                </Avatar>
                             </IconButton>
                         </Tooltip>
 
@@ -198,7 +233,7 @@ function ResponsiveAppBar() {
                             {settings.map((setting) => (
                                 <MenuItem
                                     key={setting}
-                                    onClick={handleCloseUserMenu}
+                                    onClick={() => handleLoginMenu(setting)}
                                 >
                                     <Typography sx={{ textAlign: 'center' }}>
                                         {setting}
@@ -206,6 +241,11 @@ function ResponsiveAppBar() {
                                 </MenuItem>
                             ))}
                         </Menu>
+
+                        <ConnectionUtilisateur
+                            open={dialogLoginOuvert}
+                            onClose={() => setDialogLoginOuvert(false)}
+                        />
                     </Box>
 
                 </Toolbar>
