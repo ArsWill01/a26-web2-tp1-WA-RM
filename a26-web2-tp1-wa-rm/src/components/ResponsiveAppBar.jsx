@@ -12,13 +12,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import ConnectionUtilisateur from './ConnectionUtilisateur';
+import { loginContext } from '../context/LoginContext';
 
-const pages = ['Échanges', 'Pricing'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Échanges', 'Objets']; // Admin
+const settingsConnecte = ['Logout'];
+const settingsDeconnecte = ['Login'];
 
 function ResponsiveAppBar() {
+    const { login, deconnecter } = loginContext();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [dialogLoginOuvert, setDialogLoginOuvert] = React.useState(false);
+
+    const settings = login ? settingsConnecte : settingsDeconnecte;
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -34,6 +41,16 @@ function ResponsiveAppBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleLoginMenu = (setting) => {
+        handleCloseUserMenu();
+
+        if (setting === 'Login') {
+            setDialogLoginOuvert(true);
+        } else if (setting === 'Logout') {
+            deconnecter();
+        }
     };
 
     return (
@@ -167,15 +184,14 @@ function ResponsiveAppBar() {
 
                     {/* User menu */}
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title={login ? login.nom : 'Non connecté'}>
                             <IconButton
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
                             >
-                                <Avatar
-                                    alt="User"
-                                    src="/static/images/avatar/2.jpg"
-                                />
+                                <Avatar alt={login ? login.nom : 'Invité'}>
+                                    {login ? login.nom[0] : null}
+                                </Avatar>
                             </IconButton>
                         </Tooltip>
 
@@ -198,7 +214,7 @@ function ResponsiveAppBar() {
                             {settings.map((setting) => (
                                 <MenuItem
                                     key={setting}
-                                    onClick={handleCloseUserMenu}
+                                    onClick={() => handleLoginMenu(setting)}
                                 >
                                     <Typography sx={{ textAlign: 'center' }}>
                                         {setting}
@@ -206,6 +222,11 @@ function ResponsiveAppBar() {
                                 </MenuItem>
                             ))}
                         </Menu>
+
+                        <ConnectionUtilisateur
+                            open={dialogLoginOuvert}
+                            onClose={() => setDialogLoginOuvert(false)}
+                        />
                     </Box>
 
                 </Toolbar>
