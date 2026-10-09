@@ -23,31 +23,39 @@ function Acceuil({ onNavigate }) {
                     Mon site d'échange
                 </h1>
 
-                <p style={{fontFamily: "Arial, sans-serif", color: "#555", fontSize: "19px", lineHeight: "1.6", marginBottom: "30px"}}>
-                    Bienvenue sur mon application
-                    <br/>
-                    Échangez, découvrez et partagez en ligne!.
-                </p>
+                {!login ? (
+                    <>
+                        <p style={{fontFamily: "Arial, sans-serif", color: "#555", fontSize: "19px", lineHeight: "1.6", marginBottom: "30px"}}>
+                            Vous devez vous connecter pour accéder au site d'échange.
+                            <br/>
+                            Connectez-vous pour échanger, découvrir et partager en ligne!
+                        </p>
 
-                {!login && (
-                    <button
-                        onClick={() => setDialogConnexionOpen(true)}
-                        style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}
-                    >
-                        Login/Se Connecter
-                    </button>
-                )}
-
-                {login && (
-                    <div style={{display: "flex", justifyContent: "center", gap: "40px"}}>
-                        <button onClick={() => onNavigate("echanges")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
-                            Découvrir les échanges
+                        <button
+                            onClick={() => setDialogConnexionOpen(true)}
+                            style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}
+                        >
+                            Login/Se Connecter
                         </button>
+                    </>
+                ) : (
+                    <>
+                        <p style={{fontFamily: "Arial, sans-serif", color: "#555", fontSize: "19px", lineHeight: "1.6", marginBottom: "30px"}}>
+                            Bienvenue sur mon application, {login.nom}!
+                            <br/>
+                            Échangez, découvrez et partagez en ligne!.
+                        </p>
 
-                        <button onClick={() => onNavigate("objets")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
-                            Découvrez les objets
-                        </button>
-                    </div>
+                        <div style={{display: "flex", justifyContent: "center", gap: "40px"}}>
+                            <button onClick={() => onNavigate("echanges")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                                Découvrir les échanges
+                            </button>
+
+                            <button onClick={() => onNavigate("objets")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                                Découvrez les objets
+                            </button>
+                        </div>
+                    </>
                 )}
             </div>
             <ConnectionUtilisateur
