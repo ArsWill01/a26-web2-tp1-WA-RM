@@ -1,4 +1,9 @@
-function Acceuil() {
+import { loginContext } from "../context/LoginContext.jsx"
+
+function Acceuil({ onNavigate }) {
+
+    const { login } = loginContext();
+
     return (
         <div
             style={{
@@ -21,15 +26,17 @@ function Acceuil() {
                     Échangez, découvrez et partagez en ligne!.
                 </p>
 
-                <div style={{display: "flex", justifyContent: "center", gap: "50px"}}>
-                    <button style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
-                        Découvrir les échanges
-                    </button>
+                {login && (
+                    <div style={{display: "flex", justifyContent: "center", gap: "40px"}}>
+                        <button onClick={() => onNavigate("echanges")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                            Découvrir les échanges
+                        </button>
 
-                    <button style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
-                        Découvrez les objets
-                    </button>
-                </div>
+                        <button onClick={() => onNavigate("objets")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                            Découvrez les objets
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
