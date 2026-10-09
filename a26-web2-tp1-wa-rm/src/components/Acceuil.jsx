@@ -1,8 +1,11 @@
 import { loginContext } from "../context/LoginContext.jsx"
+import { useState } from "react";
+import ConnectionUtilisateur from "./ConnectionUtilisateur.jsx";
 
 function Acceuil({ onNavigate }) {
 
     const { login } = loginContext();
+    const [dialogConnexionOpen, setDialogConnexionOpen] = useState(false);
 
     return (
         <div
@@ -26,6 +29,15 @@ function Acceuil({ onNavigate }) {
                     Échangez, découvrez et partagez en ligne!.
                 </p>
 
+                {!login && (
+                    <button
+                        onClick={() => setDialogConnexionOpen(true)}
+                        style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}
+                    >
+                        Login/Se Connecter
+                    </button>
+                )}
+
                 {login && (
                     <div style={{display: "flex", justifyContent: "center", gap: "40px"}}>
                         <button onClick={() => onNavigate("echanges")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
@@ -38,6 +50,10 @@ function Acceuil({ onNavigate }) {
                     </div>
                 )}
             </div>
+            <ConnectionUtilisateur
+                open={dialogConnexionOpen}
+                onClose={() => setDialogConnexionOpen(false)}
+            />
         </div>
     );
 }
