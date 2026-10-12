@@ -38,7 +38,7 @@ function App() {
         <LoginContext.Provider value={{login, connecter, deconnecter}}>
             <ResponsiveAppBar onNavigate={setPage}/>
 
-            {page === 'accueil' && <Acceuil/>}
+            {page === 'accueil' && <Acceuil onNavigate={setPage}/>}
             {page === 'echanges' && <ModuleEchange/>}
             {page === 'objets' && (
                 <>
