@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
 import GestionObjetUtilisateur from './components/GestionObjetUtilisateur';
+import SouhaitUtilisateur from './components/SouhaitUtilisateur';
 import {LoginContext} from './context/LoginContext';
 import {utilisateur} from './scripts/utilisateur';
 import {objets} from './scripts/objets';
@@ -39,7 +40,12 @@ function App() {
 
             {page === 'accueil' && <Acceuil/>}
             {page === 'echanges' && <ModuleEchange/>}
-            {page === 'objets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets}/>}
+            {page === 'objets' && (
+                <>
+                    <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets}/>
+                    <SouhaitUtilisateur/>
+                </>
+            )}
         </LoginContext.Provider>
     )
 }
