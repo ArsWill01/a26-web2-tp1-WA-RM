@@ -1,6 +1,7 @@
 export const objets = [
     {
         id: 1,
+        idUtilisateur: 1,
         nom: "Charizard",
         description: "first edition foil",
         etat:"un peu jouée",
@@ -9,6 +10,7 @@ export const objets = [
     },
     {
         id: 2,
+        idUtilisateur: 1,
         nom: "Chaos confetti",
         description: "aucune",
         etat:"un peu endomager",
@@ -17,6 +19,7 @@ export const objets = [
     },
     {
         id: 3,
+        idUtilisateur: 2,
         nom: "Winnie the pooh",
         description: "aucune",
         etat:"parfait état",

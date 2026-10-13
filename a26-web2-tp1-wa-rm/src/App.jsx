@@ -5,6 +5,7 @@ import SouhaitUtilisateur from './components/SouhaitUtilisateur';
 import {LoginContext} from './context/LoginContext';
 import {utilisateur} from './scripts/utilisateur';
 import {objets} from './scripts/objets';
+import {souhait} from './scripts/souhait.js';
 import './App.css';
 import Acceuil from "./components/Acceuil.jsx";
 import ModuleEchange from "./components/ModuleEchange.jsx";
@@ -13,6 +14,8 @@ function App() {
     const [login, setLogin] = useState(null);
     const [page, setPage] = useState('accueil');
     const [listeObjets, setListeObjets] = useState(objets);
+    const [souhaits, setSouhaits] = useState(souhait);
+
 
     const connecter = (nom, motDePasse) => {
         const trouve = utilisateur.find(
@@ -43,7 +46,7 @@ function App() {
             {page === 'objets' && (
                 <>
                     <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets}/>
-                    <SouhaitUtilisateur/>
+                    <SouhaitUtilisateur souhaits={souhaits} setSouhaits={setSouhaits}/>
                 </>
             )}
         </LoginContext.Provider>

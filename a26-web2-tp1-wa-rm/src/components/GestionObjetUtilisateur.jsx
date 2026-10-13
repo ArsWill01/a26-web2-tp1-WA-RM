@@ -1,8 +1,11 @@
 import {useState} from 'react';
 import ModuleObjet from './ModuleObjet.jsx';
+import {loginContext} from '../context/LoginContext';
 
 function GestionObjetUtilisateur({objets, setObjets}) {
+    const {login} = loginContext();
     const [objetEnEdition, setObjetEnEdition] = useState(null);
+    const mesObjets = objets.filter((objet) => objet.idUtilisateur === login?.id);
 
     // set objet avec des valeurs vides
     function ouvrirAjout() {
@@ -28,7 +31,7 @@ function GestionObjetUtilisateur({objets, setObjets}) {
             ));
         } else {
             const nouvelId = Math.max(0, ...objets.map((objet) => objet.id)) + 1;
-            setObjets([...objets, {id: nouvelId, ...valeurs}]);
+            setObjets([...objets, {id: nouvelId, idUtilisateur: login.id, ...valeurs}]);
         }
 
         setObjetEnEdition(null);
@@ -48,7 +51,7 @@ function GestionObjetUtilisateur({objets, setObjets}) {
             <h2 style={{fontFamily: "Trebuchet MS, sans-serif", fontSize: "42px", fontWeight: "bold", textAlign: "center", marginBottom: "10px", background: "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"}}>
                 Objets
             </h2>
-            <h3 style={{fontFamily: "Arial, sans-serif", textAlign: "center", color: "#666", fontSize: "18px", marginBottom: "30px"}}>Nombre d'objets : {objets.length}</h3>
+            <h3 style={{fontFamily: "Arial, sans-serif", textAlign: "center", color: "#666", fontSize: "18px", marginBottom: "30px"}}>Nombre d'objets : {mesObjets.length}</h3>
 
             <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
                 <button type="button" onClick={ouvrirAjout} style={{
@@ -73,7 +76,7 @@ function GestionObjetUtilisateur({objets, setObjets}) {
                 boxShadow: "0 6px 18px rgba(70, 50, 150, 0.12)",
                 transition: "0.2s"
             }}>
-                {objets.map((objet) => (
+                {mesObjets.map((objet) => (
                     <ModuleObjet
                         key={objet.id}
                         {...objet}
