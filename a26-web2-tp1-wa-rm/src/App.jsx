@@ -10,7 +10,6 @@ import ModuleEchange from "./components/ModuleEchange.jsx";
 import {propositionsInitiales} from "./scripts/echange.js";
 
 function App() {
-
     const [login, setLogin] = useState(null);
     const [page, setPage] = useState('accueil');
     const [listeObjets, setListeObjets] = useState(objets);
