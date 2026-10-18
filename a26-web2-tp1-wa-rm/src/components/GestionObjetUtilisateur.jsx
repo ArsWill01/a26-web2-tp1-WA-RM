@@ -2,10 +2,12 @@ import {useState} from 'react';
 import ModuleObjet from './ModuleObjet.jsx';
 import {loginContext} from '../context/LoginContext';
 
-function GestionObjetUtilisateur({objets, setObjets}) {
+function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     const {login} = loginContext();
     const [objetEnEdition, setObjetEnEdition] = useState(null);
-    const mesObjets = objets.filter((objet) => objet.idUtilisateur === login?.id);
+    const mesObjets = objets.filter((objet) =>
+        lesMiens ? objet.idUtilisateur === login?.id : objet.idUtilisateur !== login?.id
+    );
 
     // set objet avec des valeurs vides
     function ouvrirAjout() {
@@ -53,19 +55,21 @@ function GestionObjetUtilisateur({objets, setObjets}) {
             </h2>
             <h3 style={{fontFamily: "Arial, sans-serif", textAlign: "center", color: "#666", fontSize: "18px", marginBottom: "30px"}}>Nombre d'objets : {mesObjets.length}</h3>
 
-            <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
-                <button type="button" onClick={ouvrirAjout} style={{
-                    background: "linear-gradient(90deg, #1976d2, #7b2cbf)",
-                    color: "white",
-                    border: "none",
-                    padding: "14px 32px",
-                    borderRadius: "30px",
-                    fontSize: "17px",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                    boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"
-                }}>Ajouter</button>
-            </div>
+            {lesMiens && (
+                <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
+                    <button type="button" onClick={ouvrirAjout} style={{
+                        background: "linear-gradient(90deg, #1976d2, #7b2cbf)",
+                        color: "white",
+                        border: "none",
+                        padding: "14px 32px",
+                        borderRadius: "30px",
+                        fontSize: "17px",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                        boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"
+                    }}>Ajouter</button>
+                </div>
+            )}
 
 
             <div className="gallery" style={{
@@ -81,13 +85,13 @@ function GestionObjetUtilisateur({objets, setObjets}) {
                         key={objet.id}
                         {...objet}
                         selectionne={objetEnEdition?.id === objet.id}
-                        onClick={() => setObjetEnEdition(objet)}
-                        onDelete={() => supprimerObjet(objet.id)}
+                        onClick={lesMiens ? () => setObjetEnEdition(objet) : undefined}
+                        onDelete={lesMiens ? () => supprimerObjet(objet.id) : undefined}
                     />
                 ))}
             </div>
 
-            {objetEnEdition && (
+            {lesMiens && objetEnEdition && (
                 <form key={objetEnEdition.id ?? 'nouveau'} onSubmit={enregistrerObjet} style={{padding: "30px", backgroundColor: "#ffffff", border: "2px solid #000000", borderRadius: "20px", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"}}>
                     <h3 style={{fontFamily: "Arial, sans-serif", fontSize: "30px", color: "#000000", marginBottom: "35px"}}>
                         {objetEnEdition.id ? "Modifier l'objet" : "Nouvel objet"}

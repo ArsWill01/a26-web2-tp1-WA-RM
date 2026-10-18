@@ -43,12 +43,9 @@ function App() {
 
             {page === 'accueil' && <Acceuil onNavigate={setPage}/>}
             {page === 'echanges' && <ModuleEchange/>}
-            {page === 'objets' && (
-                <>
-                    <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets}/>
-                    <SouhaitUtilisateur souhaits={souhaits} setSouhaits={setSouhaits}/>
-                </>
-            )}
+            {page === 'objets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets} lesMiens={true}/>}
+            {page === 'souhaits' && <SouhaitUtilisateur souhaits={souhaits} setSouhaits={setSouhaits}/>}
+            {page === 'autreObjets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets} lesMiens={false}/>}
         </LoginContext.Provider>
     )
 }
