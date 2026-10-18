@@ -1,9 +1,11 @@
 import {useState} from 'react';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
 import GestionObjetUtilisateur from './components/GestionObjetUtilisateur';
+import SouhaitUtilisateur from './components/SouhaitUtilisateur';
 import {LoginContext} from './context/LoginContext';
 import {utilisateur} from './scripts/utilisateur';
 import {objets} from './scripts/objets';
+import {souhait} from './scripts/souhait.js';
 import './App.css';
 import Acceuil from "./components/Acceuil.jsx";
 import ModuleEchange from "./components/ModuleEchange.jsx";
@@ -15,6 +17,8 @@ function App() {
     const [listeObjets, setListeObjets] = useState(objets);
     const [utilisateurs, setUtilisateurs] = useState(utilisateur);
     const [propositions, setPropositions] = useState(propositionsInitiales);
+    const [souhaits, setSouhaits] = useState(souhait);
+
 
     const connecter = (nom, motDePasse) => {
         const trouve = utilisateurs.find(
@@ -50,7 +54,9 @@ function App() {
                 setUtilisateurs={setUtilisateurs}
             />
             }
-            {page === 'objets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets}/>}
+            {page === 'objets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets} lesMiens={true}/>}
+            {page === 'souhaits' && <SouhaitUtilisateur souhaits={souhaits} setSouhaits={setSouhaits}/>}
+            {page === 'autreObjets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets} lesMiens={false}/>}
         </LoginContext.Provider>
     );
 }

@@ -17,7 +17,9 @@ import { loginContext } from '../context/LoginContext';
 
 const pages = [
     { nom: 'Échanges', key: 'echanges' },
-    { nom: 'Objets', key: 'objets' },
+    { nom: 'Mes Objets', key: 'objets' },
+    { nom: 'Souhaits', key: 'souhaits' },
+    { nom: 'Objets Des Autres', key: 'autreObjets' },
 ]; // Admin
 const settingsConnecte = ['Logout'];
 const settingsDeconnecte = ['Login'];
