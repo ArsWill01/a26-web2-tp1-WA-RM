@@ -1,4 +1,6 @@
 import {useState} from "react";
+import {aLeDroit} from "../scripts/droits";
+import {useJournalContext} from "../context/JournalContext";
 
 function FormPropositionEchange({mode, propositionOriginale, mesObjets, objetsDesAutres, utilisateurs, propositions, setPropositions, login,}) {
     const [recepteurId, setRecepteurId] = useState(
@@ -14,6 +16,7 @@ function FormPropositionEchange({mode, propositionOriginale, mesObjets, objetsDe
     );
 
     const [erreur, setErreur] = useState('');
+    const {journaliser} = useJournalContext();
 
     function sommeUnites(ids) {
         return ids.reduce((total, id) => {
@@ -39,6 +42,13 @@ function FormPropositionEchange({mode, propositionOriginale, mesObjets, objetsDe
     function handleSubmit(event) {
         event.preventDefault();
         setErreur('');
+
+        if (!aLeDroit(login, mode === 'contre' ? 'contreProposer' : 'proposer')) {
+            setErreur(mode === 'contre'
+                ? "Vous n'avez pas le droit de contre-proposer."
+                : "Vous n'avez pas le droit de faire une proposition.");
+            return;
+        }
 
         if (!recepteurId) {
             setErreur('Veuillez choisir un destinataire.');
@@ -100,6 +110,15 @@ function FormPropositionEchange({mode, propositionOriginale, mesObjets, objetsDe
                 },
             ]);
         }
+
+        const nomRecepteur = utilisateurs.find((u) => u.id === Number(recepteurId))?.nom ?? '?';
+        journaliser(
+            login,
+            mode === 'contre' ? 'contre_proposition' : 'proposition',
+            mode === 'contre'
+                ? `Proposition #${nouvelId} envoyée à ${nomRecepteur} (contre la #${propositionOriginale.id})`
+                : `Proposition #${nouvelId} envoyée à ${nomRecepteur}`
+        );
     }
 
     const destinatairesPossibles = utilisateurs.filter((u) => u.id !== login.id);

@@ -10,6 +10,8 @@ import './App.css';
 import Acceuil from "./components/Acceuil.jsx";
 import ModuleEchange from "./components/ModuleEchange.jsx";
 import {propositionsInitiales} from "./scripts/echange.js";
+import ModuleAdmin from "./components/ModuleAdmin.jsx";
+import {JournalContext, useJournal} from './context/JournalContext';
 
 function App() {
     const [login, setLogin] = useState(null);
@@ -18,7 +20,17 @@ function App() {
     const [utilisateurs, setUtilisateurs] = useState(utilisateur);
     const [propositions, setPropositions] = useState(propositionsInitiales);
     const [souhaits, setSouhaits] = useState(souhait);
+    const {activites, journaliser} = useJournal();
 
+    const utilisateurCourant = login ? utilisateurs.find((u) => u.id === login.id) : null;
+    const loginCourant = utilisateurCourant
+        ? {
+            id: utilisateurCourant.id,
+            nom: utilisateurCourant.nom,
+            role: utilisateurCourant.role,
+            droits: utilisateurCourant.droits,
+        }
+        : null;
 
     const connecter = (nom, motDePasse) => {
         const trouve = utilisateurs.find(
@@ -32,19 +44,30 @@ function App() {
         }
 
         setLogin({id: trouve.id, nom: trouve.nom});
+        journaliser(trouve, 'connexion');
         return true;
     };
 
     const deconnecter = () => {
+        journaliser(loginCourant, 'deconnexion');
         setLogin(null);
         setPage('accueil');
     };
 
-    return (
-        <LoginContext.Provider value={{login, connecter, deconnecter}}>
-            <ResponsiveAppBar onNavigate={setPage}/>
+    // Fait par Claude
+    const naviguer = (nouvellePage) => {
+        if (loginCourant) {
+            journaliser(loginCourant, 'consultation', `Page ${nouvellePage}`);
+        }
+        setPage(nouvellePage);
+    };
 
-            {page === 'accueil' && <Acceuil onNavigate={setPage}/>}
+    return (
+        <JournalContext.Provider value={{activites, journaliser}}>
+        <LoginContext.Provider value={{login: loginCourant, connecter, deconnecter}}>
+            <ResponsiveAppBar onNavigate={naviguer}/>
+
+            {page === 'accueil' && <Acceuil onNavigate={naviguer}/>}
             {page === 'echanges' && <ModuleEchange
                 propositions={propositions}
                 setPropositions={setPropositions}
@@ -57,7 +80,9 @@ function App() {
             {page === 'objets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets} lesMiens={true}/>}
             {page === 'souhaits' && <SouhaitUtilisateur souhaits={souhaits} setSouhaits={setSouhaits}/>}
             {page === 'autreObjets' && <GestionObjetUtilisateur objets={listeObjets} setObjets={setListeObjets} lesMiens={false}/>}
+            {page === 'admin' && <ModuleAdmin utilisateurs={utilisateurs} setUtilisateurs={setUtilisateurs}/>}
         </LoginContext.Provider>
+        </JournalContext.Provider>
     );
 }
 

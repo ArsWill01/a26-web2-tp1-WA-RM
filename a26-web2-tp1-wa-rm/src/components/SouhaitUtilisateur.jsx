@@ -1,8 +1,10 @@
 import {useState} from 'react';
 import {loginContext} from '../context/LoginContext';
+import {useJournalContext} from '../context/JournalContext';
 
 function SouhaitUtilisateur({souhaits, setSouhaits}) {
     const {login} = loginContext();
+    const {journaliser} = useJournalContext();
     const [mesSouhaits, setMesSouhaits] = useState(() =>
         souhaits
             .filter((souhait) => souhait.idUtilisateur === login?.id)
@@ -34,6 +36,7 @@ function SouhaitUtilisateur({souhaits, setSouhaits}) {
         }));
 
         setSouhaits([...autres, ...miens]);
+        journaliser(login, 'modification_souhaits', `${miens.length} souhait(s)`);
         setMesSouhaits(miens.map((souhait) => ({id: souhait.id, description: souhait.description})));
     }
 
