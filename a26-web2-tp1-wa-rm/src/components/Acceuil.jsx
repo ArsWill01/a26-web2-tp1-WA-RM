@@ -1,6 +1,7 @@
 import { loginContext } from "../context/LoginContext.jsx"
 import { useState } from "react";
 import ConnectionUtilisateur from "./ConnectionUtilisateur.jsx";
+import { estAdmin } from "../scripts/droits";
 
 function Acceuil({ onNavigate }) {
 
@@ -46,6 +47,11 @@ function Acceuil({ onNavigate }) {
                             Échangez, découvrez et partagez en ligne!.
                         </p>
 
+                        {estAdmin(login) ? (
+                            <button onClick={() => onNavigate("admin")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                                Administration
+                            </button>
+                        ) : (
                         <div style={{display: "flex", justifyContent: "center", gap: "40px"}}>
                             <button onClick={() => onNavigate("echanges")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
                                 Découvrir les échanges
@@ -55,6 +61,7 @@ function Acceuil({ onNavigate }) {
                                 Découvrez les objets
                             </button>
                         </div>
+                        )}
                     </>
                 )}
             </div>

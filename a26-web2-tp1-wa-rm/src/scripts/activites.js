@@ -1,0 +1,52 @@
+export const typesActivite = {
+    connexion: 'Connexion',
+    deconnexion: 'Déconnexion',
+    consultation: 'Consultation',
+    ajout_item: "Ajout d'item",
+    retrait_item: "Retrait d'item",
+    modification_item: "Modification d'item",
+    modification_souhaits: 'Modification des souhaits',
+    proposition: 'Proposition',
+    contre_proposition: 'Contre-proposition',
+    acceptation: 'Acceptation',
+    refus: 'Refus',
+    annulation: 'Annulation',
+    creation_utilisateur: "Création d'utilisateur",
+    suppression_utilisateur: "Suppression d'utilisateur",
+    modification_droits: 'Modification des droits',
+};
+
+export const activitesInitiales = [
+    {
+        id: 1,
+        idUtilisateur: 1,
+        utilisateur: 'Alex',
+        horodate: '2026-10-20T09:15:00',
+        type: 'connexion',
+        details: '',
+    },
+    {
+        id: 2,
+        idUtilisateur: 1,
+        utilisateur: 'Alex',
+        horodate: '2026-10-20T09:17:30',
+        type: 'proposition',
+        details: 'Proposition #2 envoyée à Nathan',
+    },
+    {
+        id: 3,
+        idUtilisateur: 2,
+        utilisateur: 'Nathan',
+        horodate: '2026-10-21T14:02:10',
+        type: 'ajout_item',
+        details: 'Winnie the pooh',
+    },
+    {
+        id: 4,
+        idUtilisateur: 3,
+        utilisateur: 'Olivier',
+        horodate: '2026-10-22T18:45:00',
+        type: 'acceptation',
+        details: 'Proposition #3 acceptée',
+    },
+];

@@ -1,9 +1,11 @@
 import {useState} from 'react';
 import ModuleObjet from './ModuleObjet.jsx';
 import {loginContext} from '../context/LoginContext';
+import {useJournalContext} from '../context/JournalContext';
 
 function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     const {login} = loginContext();
+    const {journaliser} = useJournalContext();
     const [objetEnEdition, setObjetEnEdition] = useState(null);
     const mesObjets = objets.filter((objet) =>
         lesMiens ? objet.idUtilisateur === login?.id : objet.idUtilisateur !== login?.id
@@ -31,9 +33,11 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
             setObjets(objets.map((objet) =>
                 objet.id === objetEnEdition.id ? {...objet, ...valeurs} : objet
             ));
+            journaliser(login, 'modification_item', valeurs.nom);
         } else {
             const nouvelId = Math.max(0, ...objets.map((objet) => objet.id)) + 1;
             setObjets([...objets, {id: nouvelId, idUtilisateur: login.id, ...valeurs}]);
+            journaliser(login, 'ajout_item', valeurs.nom);
         }
 
         setObjetEnEdition(null);
@@ -41,6 +45,7 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
 
     // supprime un objet
     function supprimerObjet(id) {
+        journaliser(login, 'retrait_item', objets.find((objet) => objet.id === id)?.nom ?? `#${id}`);
         setObjets(objets.filter((objet) => objet.id !== id));
 
         if (objetEnEdition?.id === id) {
