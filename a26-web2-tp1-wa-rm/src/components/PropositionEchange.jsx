@@ -62,32 +62,87 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
     }
 
     return (
-        <div style={{border: '1px solid #000', margin: '10px', padding: '10px'}}>
-            <h4>
+        <div style={{border: '1px solid #000', borderRadius: '15px', marginBottom: '20px', background: "linear-gradient(135deg, #ffffff, #f8f5ff)", boxShadow: "0 5px 15px rgba(70, 50, 150, 0.10)"}}>
+            <h4
+                style={{
+                    fontFamily: "Trebuchet MS, sans-serif",
+                    color: "#1976d2",
+                    fontSize: "22px",
+                    marginBottom: "20px"
+                }}
+            >
                 {proposeur?.nom} → {recepteur?.nom}
             </h4>
 
-            <p><strong>Items offerts :</strong> {
+            <p style={{fontFamily: "Arial, sans-serif", color: "#333"}}><strong>Items offerts :</strong> {
                 itemsOfferts.length > 0 ? itemsOfferts.map(nomDe).join(', ') : '(aucun)'
             }</p>
-            <p><strong>Items demandés :</strong> {
+            <p style={{fontFamily: "Arial, sans-serif", color: "#333"}}><strong>Items demandés :</strong> {
                 itemsDemandes.length > 0
                     ? itemsDemandes.map(nomDe).join(', ')
                     : '(aucun)'
             }</p>
-            <p><strong>Balance :</strong> {balance} unité(s)</p>
+            <p style={{fontFamily: "Arial, sans-serif", color: "#333"}}><strong>Balance :</strong> {balance} unité(s)</p>
             <p><strong>Statut :</strong> {proposition.statut}</p>
 
             {estRecepteur && enAttente && (
-                <div>
-                    <button onClick={accepter}>Accepter</button>
-                    <button onClick={refuser}>Refuser</button>
-                    <button onClick={() => setEnContre(true)}>Contre-proposer</button>
+                <div style={{display: "flex", gap: "12px", marginTop: "20px", flexWrap: "wrap"}}>
+                    <button onClick={accepter}
+                        style={{
+                            background:
+                                "linear-gradient(90deg, #1976d2, #7b2cbf)",
+                            color: "white",
+                            border: "none",
+                            padding: "11px 22px",
+                            borderRadius: "25px",
+                            fontSize: "15px",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                            boxShadow:
+                                "0 5px 12px rgba(90, 60, 180, 0.25)"
+                        }}
+                    >Accepter</button>
+                    <button onClick={refuser}
+                        style={{
+                            backgroundColor: "#ffffff",
+                            color: "#7b2cbf",
+                            border: "2px solid #7b2cbf",
+                            padding: "10px 22px",
+                            borderRadius: "25px",
+                            fontSize: "15px",
+                            fontWeight: "bold",
+                            cursor: "pointer"
+                        }}
+                    >Refuser</button>
+                    <button onClick={() => setEnContre(true)}
+                        style={{
+                            backgroundColor: "#ffffff",
+                            color: "#7b2cbf",
+                            border: "2px solid #7b2cbf",
+                            padding: "10px 22px",
+                            borderRadius: "25px",
+                            fontSize: "15px",
+                            fontWeight: "bold",
+                            cursor: "pointer"
+                        }}
+                    >Contre-proposer</button>
                 </div>
             )}
 
             {estProposeur && enAttente && (
-                <button onClick={refuser}>Annuler</button>
+                <button onClick={refuser}
+                    style={{
+                        backgroundColor: "#ffffff",
+                        color: "#000000",
+                        border: "2px solid #000000",
+                        padding: "10px 22px",
+                        borderRadius: "25px",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                        marginTop: "15px"
+                    }}
+                >Annuler</button>
             )}
 
             {/* Formulaire de contre-proposition */}
