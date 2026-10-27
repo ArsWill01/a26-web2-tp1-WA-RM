@@ -1,8 +1,13 @@
 import {useState} from "react";
 import FormPropositionEchange from './FormPropositionEchange';
+import {aLeDroit} from '../scripts/droits';
+import {useJournalContext} from '../context/JournalContext';
 
 function PropositionEchange({proposition, objets, utilisateurs, login, propositions, setPropositions, setObjets, setUtilisateurs,}) {
     const [enContre, setEnContre] = useState(false);
+    const {journaliser} = useJournalContext();
+    const peutAccepter = aLeDroit(login, 'accepter');
+    const peutContreProposer = aLeDroit(login, 'contreProposer');
 
     const proposeur = utilisateurs.find((u) => u.id === proposition.proposeurId);
     const recepteur = utilisateurs.find((u) => u.id === proposition.recepteurId);
@@ -51,6 +56,7 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
                 p.id === proposition.id ? {...p, statut: 'acceptee'} : p
             )
         );
+        journaliser(login, 'acceptation', `Proposition #${proposition.id} acceptée`);
     }
 
     function refuser() {
@@ -58,6 +64,11 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
             prev.map((p) =>
                 p.id === proposition.id ? {...p, statut: 'refusee'} : p
             )
+        );
+        journaliser(
+            login,
+            estProposeur ? 'annulation' : 'refus',
+            `Proposition #${proposition.id} ${estProposeur ? 'annulée' : 'refusée'}`
         );
     }
 
@@ -126,6 +137,10 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
                             cursor: "pointer"
                         }}
                     >Contre-proposer</button>
+                <div>
+                    {peutAccepter && <button onClick={accepter}>Accepter</button>}
+                    <button onClick={refuser}>Refuser</button>
+                    {peutContreProposer && <button onClick={() => setEnContre(true)}>Contre-proposer</button>}
                 </div>
             )}
 
@@ -146,7 +161,7 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
             )}
 
             {/* Formulaire de contre-proposition */}
-            {enContre && estRecepteur && (
+            {enContre && estRecepteur && peutContreProposer && (
                 <FormPropositionEchange
                     mode="contre"
                     propositionOriginale={proposition}

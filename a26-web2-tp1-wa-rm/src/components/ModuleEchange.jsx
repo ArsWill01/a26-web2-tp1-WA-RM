@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { loginContext } from '../context/LoginContext';
 import FormPropositionEchange from './FormPropositionEchange';
 import PropositionEchange from './PropositionEchange';
+import { aLeDroit } from '../scripts/droits';
 
 function ModuleEchange({propositions, setPropositions, objets, setObjets, utilisateurs, setUtilisateurs,}) {
     const { login } = loginContext();
-    const [onglet, setOnglet] = useState('proposer');
+    const peutProposer = aLeDroit(login, 'proposer');
+    const [onglet, setOnglet] = useState(peutProposer ? 'proposer' : 'mesEchanges');
 
     const propositionsRecues = propositions.filter((p) => p.recepteurId === login?.id);
 
@@ -75,9 +77,11 @@ function ModuleEchange({propositions, setPropositions, objets, setObjets, utilis
                                 : "none"
                     }}
                 >Mes échanges</button>
+                {peutProposer && <button onClick={() => setOnglet('proposer')}>Proposer un échange</button>}
+                <button onClick={() => setOnglet('mesEchanges')}>Mes échanges</button>
             </div>
 
-            {onglet === 'proposer' && (
+            {onglet === 'proposer' && peutProposer && (
                 <FormPropositionEchange
                     mode="creation"
                     mesObjets={mesObjets}

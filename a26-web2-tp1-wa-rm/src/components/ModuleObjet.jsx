@@ -6,9 +6,11 @@ function ModuleObjet({ photo, nom, description, etat, prix, selectionne, onClick
 
     return (
         <div className="photo-card" onClick={onClick}>
-            <button type="button" className="remove-button" onClick={handleSupprimer}>
-                X
-            </button>
+            {onDelete && (
+                <button type="button" className="remove-button" onClick={handleSupprimer}>
+                    X
+                </button>
+            )}
             {selectionne && <div className="selected">Sélectionné</div>}
             <img
                 alt={nom}

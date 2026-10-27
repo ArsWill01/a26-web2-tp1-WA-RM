@@ -14,11 +14,17 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import ConnectionUtilisateur from './ConnectionUtilisateur';
 import { loginContext } from '../context/LoginContext';
+import { estAdmin } from '../scripts/droits';
 
 const pages = [
     { nom: 'Échanges', key: 'echanges' },
-    { nom: 'Objets', key: 'objets' },
+    { nom: 'Mes Objets', key: 'objets' },
+    { nom: 'Souhaits', key: 'souhaits' },
+    { nom: 'Objets Des Autres', key: 'autreObjets' },
 ]; // Admin
+const pagesAdmin = [
+    { nom: 'Administration', key: 'admin' },
+];
 const settingsConnecte = ['Logout'];
 const settingsDeconnecte = ['Login'];
 
@@ -29,7 +35,7 @@ function ResponsiveAppBar({ onNavigate }) {
     const [dialogLoginOuvert, setDialogLoginOuvert] = React.useState(false);
 
     const settings = login ? settingsConnecte : settingsDeconnecte;
-    const pagesVisibles = login ? pages : [];
+    const pagesVisibles = login ? (estAdmin(login) ? pagesAdmin : pages) : [];
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
