@@ -1,10 +1,10 @@
 import {useState} from 'react';
 import ModuleObjet from './ModuleObjet.jsx';
-import {loginContext} from '../context/LoginContext';
+import {useLoginContext} from '../context/LoginContext';
 import {useJournalContext} from '../context/JournalContext';
 
 function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
-    const {login} = loginContext();
+    const {login} = useLoginContext();
     const {journaliser} = useJournalContext();
     const [objetEnEdition, setObjetEnEdition] = useState(null);
     const mesObjets = objets.filter((objet) =>

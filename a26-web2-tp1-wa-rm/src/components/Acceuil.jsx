@@ -1,11 +1,11 @@
-import { loginContext } from "../context/LoginContext.jsx"
+import { useLoginContext } from "../context/LoginContext.jsx"
 import { useState } from "react";
 import ConnectionUtilisateur from "./ConnectionUtilisateur.jsx";
 import { estAdmin } from "../scripts/droits";
 
 function Acceuil({ onNavigate }) {
 
-    const { login } = loginContext();
+    const { login } = useLoginContext();
     const [dialogConnexionOpen, setDialogConnexionOpen] = useState(false);
 
     return (

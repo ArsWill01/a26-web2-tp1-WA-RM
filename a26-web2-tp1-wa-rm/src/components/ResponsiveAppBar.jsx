@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import ConnectionUtilisateur from './ConnectionUtilisateur';
-import { loginContext } from '../context/LoginContext';
+import { useLoginContext } from '../context/LoginContext';
 import { estAdmin } from '../scripts/droits';
 
 const pages = [
@@ -29,7 +29,7 @@ const settingsConnecte = ['Logout'];
 const settingsDeconnecte = ['Login'];
 
 function ResponsiveAppBar({ onNavigate }) {
-    const { login, deconnecter } = loginContext();
+    const { login, deconnecter } = useLoginContext();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [dialogLoginOuvert, setDialogLoginOuvert] = React.useState(false);

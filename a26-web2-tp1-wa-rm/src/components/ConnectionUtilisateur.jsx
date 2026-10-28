@@ -5,10 +5,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { loginContext } from '../context/LoginContext';
+import { useLoginContext } from '../context/LoginContext';
 
 function ConnectionUtilisateur({ open, onClose }) {
-    const { connecter } = loginContext();
+    const { connecter } = useLoginContext();
     const nomRef = React.useRef(null);
     const motDePasseRef = React.useRef(null);
     const [erreur, setErreur] = React.useState(false);

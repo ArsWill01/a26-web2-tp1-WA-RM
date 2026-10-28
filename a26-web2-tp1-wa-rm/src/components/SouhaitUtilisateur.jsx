@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import {loginContext} from '../context/LoginContext';
+import {useLoginContext} from '../context/LoginContext';
 import {useJournalContext} from '../context/JournalContext';
 
 function SouhaitUtilisateur({souhaits, setSouhaits}) {
-    const {login} = loginContext();
+    const {login} = useLoginContext();
     const {journaliser} = useJournalContext();
     const [mesSouhaits, setMesSouhaits] = useState(() =>
         souhaits

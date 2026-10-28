@@ -16,13 +16,13 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { loginContext } from '../context/LoginContext';
+import { useLoginContext } from '../context/LoginContext';
 import { useJournalContext } from '../context/JournalContext';
 import { aLeDroit, droitsParDefaut, estAdmin, listeDroits } from '../scripts/droits';
 
 // Fait par Claude
 function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {
-    const { login } = loginContext();
+    const { login } = useLoginContext();
     const { journaliser } = useJournalContext();
     const [role, setRole] = useState('utilisateur');
     const [erreur, setErreur] = useState('');

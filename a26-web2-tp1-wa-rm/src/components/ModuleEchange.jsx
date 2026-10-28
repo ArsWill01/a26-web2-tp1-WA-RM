@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { loginContext } from '../context/LoginContext';
+import { useLoginContext } from '../context/LoginContext';
 import FormPropositionEchange from './FormPropositionEchange';
 import PropositionEchange from './PropositionEchange';
 import { aLeDroit } from '../scripts/droits';
 
 function ModuleEchange({propositions, setPropositions, objets, setObjets, utilisateurs, setUtilisateurs,}) {
-    const { login } = loginContext();
+    const { login } = useLoginContext();
     const peutProposer = aLeDroit(login, 'proposer');
     const [onglet, setOnglet] = useState(peutProposer ? 'proposer' : 'mesEchanges');
 
@@ -33,7 +33,7 @@ function ModuleEchange({propositions, setPropositions, objets, setObjets, utilis
                 }}
             >Échanges</h1>
             <div>
-                <button onClick={() => setOnglet('proposer')}
+                {peutProposer && <button onClick={() => setOnglet('proposer')}
                     style={{
                         background:
                             onglet === 'proposer'
@@ -54,7 +54,7 @@ function ModuleEchange({propositions, setPropositions, objets, setObjets, utilis
                                 ? "0 6px 15px rgba(90, 60, 180, 0.3)"
                                 : "none"
                     }}
-                >Proposer un échange</button>
+                >Proposer un échange</button>}
                 <button onClick={() => setOnglet('mesEchanges')}
                     style={{
                         background:
@@ -77,8 +77,6 @@ function ModuleEchange({propositions, setPropositions, objets, setObjets, utilis
                                 : "none"
                     }}
                 >Mes échanges</button>
-                {peutProposer && <button onClick={() => setOnglet('proposer')}>Proposer un échange</button>}
-                <button onClick={() => setOnglet('mesEchanges')}>Mes échanges</button>
             </div>
 
             {onglet === 'proposer' && peutProposer && (

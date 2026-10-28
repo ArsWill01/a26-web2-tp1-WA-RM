@@ -2,14 +2,14 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { loginContext } from '../context/LoginContext';
+import { useLoginContext } from '../context/LoginContext';
 import { estAdmin } from '../scripts/droits';
 import GestionUtilisateurs from './GestionUtilisateurs';
 import JournalActivites from './JournalActivites';
 
 // Fait par Claude
 function ModuleAdmin({ utilisateurs, setUtilisateurs }) {
-    const { login } = loginContext();
+    const { login } = useLoginContext();
     const [onglet, setOnglet] = useState('utilisateurs');
 
     if (!estAdmin(login)) {

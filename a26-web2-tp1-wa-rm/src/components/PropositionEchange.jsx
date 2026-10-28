@@ -98,7 +98,7 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
 
             {estRecepteur && enAttente && (
                 <div style={{display: "flex", gap: "12px", marginTop: "20px", flexWrap: "wrap"}}>
-                    <button onClick={accepter}
+                    {peutAccepter && <button onClick={accepter}
                         style={{
                             background:
                                 "linear-gradient(90deg, #1976d2, #7b2cbf)",
@@ -112,7 +112,7 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
                             boxShadow:
                                 "0 5px 12px rgba(90, 60, 180, 0.25)"
                         }}
-                    >Accepter</button>
+                    >Accepter</button>}
                     <button onClick={refuser}
                         style={{
                             backgroundColor: "#ffffff",
@@ -125,7 +125,7 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
                             cursor: "pointer"
                         }}
                     >Refuser</button>
-                    <button onClick={() => setEnContre(true)}
+                    {peutContreProposer && <button onClick={() => setEnContre(true)}
                         style={{
                             backgroundColor: "#ffffff",
                             color: "#7b2cbf",
@@ -136,11 +136,7 @@ function PropositionEchange({proposition, objets, utilisateurs, login, propositi
                             fontWeight: "bold",
                             cursor: "pointer"
                         }}
-                    >Contre-proposer</button>
-                <div>
-                    {peutAccepter && <button onClick={accepter}>Accepter</button>}
-                    <button onClick={refuser}>Refuser</button>
-                    {peutContreProposer && <button onClick={() => setEnContre(true)}>Contre-proposer</button>}
+                    >Contre-proposer</button>}
                 </div>
             )}
 
