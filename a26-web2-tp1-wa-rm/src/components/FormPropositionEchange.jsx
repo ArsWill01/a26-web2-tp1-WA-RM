@@ -61,10 +61,7 @@ function FormPropositionEchange({mode, propositionOriginale, mesObjets, objetsDe
 
         // contre-proposition : au moins un item identique à la proposition initiale
         if (mode === 'contre') {
-            const itemsInitiaux = [
-                ...propositionOriginale.itemsOfferts,
-                ...propositionOriginale.itemsDemandes,
-            ];
+            const itemsInitiaux = [...propositionOriginale.itemsOfferts, ...propositionOriginale.itemsDemandes];
             const itemsCourants = [...itemsOfferts, ...itemsDemandes];
             const aItemCommun = itemsCourants.some((id) => itemsInitiaux.includes(id));
             if (!aItemCommun) {
@@ -130,8 +127,7 @@ function FormPropositionEchange({mode, propositionOriginale, mesObjets, objetsDe
               backgroundColor: "#ffffff",
               border: "2px solid #000000",
               borderRadius: "20px",
-              boxShadow:
-                  "0 4px 12px rgba(0, 0, 0, 0.15)",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
               maxWidth: "800px",
               margin: "0 auto"
           }}
