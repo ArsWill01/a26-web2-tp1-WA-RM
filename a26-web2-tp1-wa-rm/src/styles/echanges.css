@@ -1,0 +1,152 @@
+/* Module échanges */
+.echanges-onglets {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.echanges-onglet {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #7b2cbf;
+    padding: 13px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.echanges-onglet.actif {
+    background: linear-gradient(90deg, #1976d2, #7b2cbf);
+    color: #ffffff;
+    box-shadow: 0 6px 15px rgba(90, 60, 180, 0.3);
+}
+
+.echanges-vide {
+    font-family: "Arial", sans-serif;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Formulaire proposition */
+.proposition-form {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.proposition-form-titre {
+    font-family: "Arial", sans-serif;
+    font-size: 30px;
+    color: #000000;
+    margin-bottom: 35px;
+}
+
+.proposition-label {
+    display: block;
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 8px;
+}
+
+.proposition-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.proposition-fieldset {
+    border: 1px solid #000000;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+}
+
+.proposition-legend {
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    color: #000000;
+    padding: 0 8px;
+}
+
+.proposition-item-label {
+    display: block;
+    font-family: "Arial", sans-serif;
+    color: #000000;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.proposition-checkbox {
+    margin-right: 8px;
+}
+
+.proposition-vide {
+    font-family: "Arial", sans-serif;
+    color: #555;
+}
+
+.proposition-balance {
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    font-family: "Arial", sans-serif;
+    color: #000000;
+}
+
+.proposition-erreur {
+    color: red;
+}
+
+/* Carte proposition */
+.proposition-carte {
+    border: 1px solid #000000;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #ffffff, #f8f5ff);
+    box-shadow: 0 5px 15px rgba(70, 50, 150, 0.10);
+    padding: 20px;
+}
+
+.proposition-carte-titre {
+    font-family: "Trebuchet MS", sans-serif;
+    color: #1976d2;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.proposition-carte-texte {
+    font-family: "Arial", sans-serif;
+    color: #333;
+}
+
+.proposition-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.proposition-bouton-annuler {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}

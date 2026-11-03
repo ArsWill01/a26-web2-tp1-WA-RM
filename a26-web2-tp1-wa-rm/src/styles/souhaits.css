@@ -1,0 +1,22 @@
+/* Liste de souhaits */
+.souhaits-bouton-ajout {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.souhaits-ligne {
+    display: flex;
+    justify-content: center;
+    margin: 8px;
+}
+
+.souhaits-input {
+    width: 680px;
+    font-size: 16px;
+}
+
+.souhaits-actions {
+    display: flex;
+    justify-content: center;
+}

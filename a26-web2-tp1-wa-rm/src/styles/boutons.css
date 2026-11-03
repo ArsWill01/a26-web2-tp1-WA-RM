@@ -1,0 +1,55 @@
+.btn-principal {
+    background: linear-gradient(90deg, #1976d2, #7b2cbf);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(90, 60, 180, 0.3);
+}
+
+.btn-secondaire {
+    background-color: #ffffff;
+    color: #7b2cbf;
+    border: 2px solid #7b2cbf;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-noir {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    padding: 11px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-blanc-noir {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    padding: 11px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-submit {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}

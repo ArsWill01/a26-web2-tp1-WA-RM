@@ -1,0 +1,59 @@
+/* Gestion d'objets */
+.objets-bouton-ajout {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.objets-galerie {
+    background: #ffffff;
+    border: 2px solid #e3dcff;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 6px 18px rgba(70, 50, 150, 0.12);
+    transition: 0.2s;
+}
+
+/* Formulaire objet */
+.objet-form {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.objet-form-titre {
+    font-family: "Arial", sans-serif;
+    font-size: 30px;
+    color: #000000;
+    margin-bottom: 35px;
+}
+
+.objet-form-label {
+    display: block;
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 6px;
+}
+
+.objet-form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.objet-form-input:last-of-type {
+    margin-bottom: 25px;
+}
+
+.objet-form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
