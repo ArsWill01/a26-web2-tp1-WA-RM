@@ -18,7 +18,14 @@ function ModuleAdmin({ utilisateurs, setUtilisateurs }) {
 
     return (
         <Box sx={{ maxWidth: 1200, mx: 'auto', p: 3 }}>
-            <h2 style={{fontFamily: "Trebuchet MS, sans-serif", fontSize: "42px", fontWeight: "bold", textAlign: "center", marginBottom: "10px", background: "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"}}>
+            <h2 style={{
+                fontFamily: "Trebuchet MS, sans-serif",
+                fontSize: "42px", fontWeight: "bold",
+                textAlign: "center", marginBottom: "10px",
+                background: "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent"
+            }}>
                 Administration
             </h2>
 
