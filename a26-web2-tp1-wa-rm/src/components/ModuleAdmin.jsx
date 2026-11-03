@@ -6,6 +6,8 @@ import { useLoginContext } from '../context/LoginContext';
 import { estAdmin } from '../scripts/droits';
 import GestionUtilisateurs from './GestionUtilisateurs';
 import JournalActivites from './JournalActivites';
+import '../styles/admin.css';
+import '../styles/titres.css';
 
 // Fait par Claude
 function ModuleAdmin({ utilisateurs, setUtilisateurs }) {
@@ -18,14 +20,7 @@ function ModuleAdmin({ utilisateurs, setUtilisateurs }) {
 
     return (
         <Box sx={{ maxWidth: 1200, mx: 'auto', p: 3 }}>
-            <h2 style={{
-                fontFamily: "Trebuchet MS, sans-serif",
-                fontSize: "42px", fontWeight: "bold",
-                textAlign: "center", marginBottom: "10px",
-                background: "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent"
-            }}>
+            <h2 className="titre-degrade">
                 Administration
             </h2>
 

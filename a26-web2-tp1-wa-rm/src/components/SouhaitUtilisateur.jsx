@@ -1,6 +1,9 @@
 import {useState} from 'react';
 import {useLoginContext} from '../context/LoginContext';
 import {useJournalContext} from '../context/JournalContext';
+import '../styles/souhaits.css';
+import '../styles/titres.css';
+import '../styles/boutons.css';
 
 function SouhaitUtilisateur({souhaits, setSouhaits}) {
     const {login} = useLoginContext();
@@ -42,53 +45,29 @@ function SouhaitUtilisateur({souhaits, setSouhaits}) {
 
     return (
         <div>
-            <h2 style={{fontFamily: "Trebuchet MS, sans-serif", fontSize: "42px", fontWeight: "bold", textAlign: "center", marginBottom: "10px", background: "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"}}>
-                Liste de souhaits
-            </h2>
+            <h2 className="titre-degrade">Liste de souhaits</h2>
 
-            <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
-                <button type="button" onClick={ajouterSouhait} style={{
-                    background: "linear-gradient(90deg, #1976d2, #7b2cbf)",
-                    color: "white",
-                    border: "none",
-                    padding: "14px 32px",
-                    borderRadius: "30px",
-                    fontSize: "17px",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                    boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"
-                }}>Ajouter</button>
+            <div className="souhaits-bouton-ajout">
+                <button type="button" onClick={ajouterSouhait} className="btn-principal">Ajouter</button>
             </div>
             <form onSubmit={enregistrerSouhaits}>
-            {mesSouhaits.map((ligne) => (
-                <div key={ligne.id} style={{ display: 'flex', justifyContent: 'center', margin: '8px' }}>
-                    <input
-                        type="text"
-                        name="description"
-                        defaultValue={ligne.description}
-                        style={{ width: "680px", fontSize: "16px" }}
-                    />
-                    <button type="button" onClick={() => supprimerSouhait(ligne.id)}>X</button>
+                {mesSouhaits.map((ligne) => (
+                    <div key={ligne.id} className="souhaits-ligne">
+                        <input
+                            type="text"
+                            name="description"
+                            defaultValue={ligne.description}
+                            className="souhaits-input"
+                        />
+                        <button type="button" onClick={() => supprimerSouhait(ligne.id)}>X</button>
+                    </div>
+                ))}
+                <br/>
+                <div className="souhaits-actions">
+                    <button type="submit" className="btn-noir">
+                        Enregistrer
+                    </button>
                 </div>
-            ))}
-            <br/>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <button
-                    type="submit"
-                    style={{
-                        backgroundColor: "#000000",
-                        color: "#ffffff",
-                        border: "2px solid #000000",
-                        padding: "11px 25px",
-                        borderRadius: "5px",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        cursor: "pointer"
-                    }}
-                >
-                    Enregistrer
-                </button>
-            </div>
             </form>
         </div>
     );

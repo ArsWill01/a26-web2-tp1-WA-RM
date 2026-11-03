@@ -3,6 +3,8 @@ import { useLoginContext } from '../context/LoginContext';
 import FormPropositionEchange from './FormPropositionEchange';
 import PropositionEchange from './PropositionEchange';
 import { aLeDroit } from '../scripts/droits';
+import '../styles/echanges.css';
+import '../styles/titres.css';
 
 function ModuleEchange({propositions, setPropositions, objets, setObjets, utilisateurs, setUtilisateurs,}) {
     const { login } = useLoginContext();
@@ -19,64 +21,22 @@ function ModuleEchange({propositions, setPropositions, objets, setObjets, utilis
 
     return (
         <>
-            <h1
-                style={{
-                    fontFamily: "Trebuchet MS, sans-serif",
-                    fontSize: "42px",
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    marginBottom: "30px",
-                    background:
-                        "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent"
-                }}
-            >Échanges</h1>
-            <div>
-                {peutProposer && <button onClick={() => setOnglet('proposer')}
-                    style={{
-                        background:
-                            onglet === 'proposer'
-                                ? "linear-gradient(90deg, #1976d2, #7b2cbf)"
-                                : "#ffffff",
-                        color:
-                            onglet === 'proposer'
-                                ? "#ffffff"
-                                : "#000000",
-                        border: "2px solid #7b2cbf",
-                        padding: "13px 25px",
-                        borderRadius: "30px",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        cursor: "pointer",
-                        boxShadow:
-                            onglet === 'proposer'
-                                ? "0 6px 15px rgba(90, 60, 180, 0.3)"
-                                : "none"
-                    }}
-                >Proposer un échange</button>}
-                <button onClick={() => setOnglet('mesEchanges')}
-                    style={{
-                        background:
-                            onglet === 'mesEchanges'
-                                ? "linear-gradient(90deg, #1976d2, #7b2cbf)"
-                                : "#ffffff",
-                        color:
-                            onglet === 'mesEchanges'
-                                ? "#ffffff"
-                                : "#000000",
-                        border: "2px solid #7b2cbf",
-                        padding: "13px 25px",
-                        borderRadius: "30px",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        cursor: "pointer",
-                        boxShadow:
-                            onglet === 'mesEchanges'
-                                ? "0 6px 15px rgba(90, 60, 180, 0.3)"
-                                : "none"
-                    }}
-                >Mes échanges</button>
+            <h1 className="titre-degrade">Échanges</h1>
+            <div className="echanges-onglets">
+                {peutProposer && (
+                    <button
+                        onClick={() => setOnglet('proposer')}
+                        className={`echanges-onglet ${onglet === 'proposer' ? 'actif' : ''}`}
+                    >
+                        Proposer un échange
+                    </button>
+                )}
+                <button
+                    onClick={() => setOnglet('mesEchanges')}
+                    className={`echanges-onglet ${onglet === 'mesEchanges' ? 'actif' : ''}`}
+                >
+                    Mes échanges
+                </button>
             </div>
 
             {onglet === 'proposer' && peutProposer && (
@@ -93,13 +53,7 @@ function ModuleEchange({propositions, setPropositions, objets, setObjets, utilis
 
             {onglet === 'mesEchanges' && (
                 <div>
-                    <h2 style={{
-                        fontFamily: "Trebuchet MS, sans-serif",
-                        fontSize: "28px",
-                        color: "#7b2cbf",
-                        marginBottom: "20px"
-                    }}
-                    >Propositions reçues</h2>
+                    <h2 className="titre-section">Propositions reçues</h2>
                     {propositionsRecues.length === 0 && <p>Aucune proposition reçue.</p>}
                     {propositionsRecues.map((p) => (
                         <PropositionEchange
@@ -115,20 +69,10 @@ function ModuleEchange({propositions, setPropositions, objets, setObjets, utilis
                         />
                     ))}
 
-                    <h2 style={{
-                        fontFamily: "Trebuchet MS, sans-serif",
-                        fontSize: "28px",
-                        color: "#7b2cbf",
-                        marginBottom: "20px"
-                    }}
-                    >Propositions envoyées</h2>
-                    {propositionsEnvoyees.length === 0 && <p
-                    style={{
-                        fontFamily: "Arial, sans-serif",
-                        color: "#666",
-                        fontSize: "16px"
-                    }}
-                    >Aucune proposition envoyée.</p>}
+                    <h2 className="titre-section">Propositions envoyées</h2>
+                    {propositionsEnvoyees.length === 0 && (
+                        <p className="echanges-vide">Aucune proposition envoyée.</p>
+                    )}
                     {propositionsEnvoyees.map((p) => (
                         <PropositionEchange
                             key={p.id}

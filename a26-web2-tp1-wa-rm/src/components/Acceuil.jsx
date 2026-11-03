@@ -2,6 +2,9 @@ import { useLoginContext } from "../context/LoginContext.jsx"
 import { useState } from "react";
 import ConnectionUtilisateur from "./ConnectionUtilisateur.jsx";
 import { estAdmin } from "../scripts/droits";
+import '../styles/acceuil.css';
+import '../styles/boutons.css';
+import '../styles/titres.css';
 
 function Acceuil({ onNavigate }) {
 
@@ -9,24 +12,15 @@ function Acceuil({ onNavigate }) {
     const [dialogConnexionOpen, setDialogConnexionOpen] = useState(false);
 
     return (
-        <div
-            style={{
-                minHeight: "calc(125vh - 400px)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                background: "linear-gradient(135deg, #f5f9ff, #e8f2ff)",
-                padding: "40px"
-            }}
-        >
-            <div style={{backgroundColor: "white", padding: "55px", borderRadius: "25px", textAlign: "center", boxShadow: "0 12px 35px rgba(70, 50, 150, 0.18)", maxWidth: "650px", width: "100%", border: "2px solid #e3dcff"}}>
-                <h1 style={{fontFamily: "Trebuchet MS, sans-serif", fontSize: "46px", fontWeight: "bold", marginBottom: "15px", background: "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"}}>
+        <div className="accueil-container">
+            <div className="accueil-card">
+                <h1 className="accueil-titre">
                     Mon site d'échange
                 </h1>
 
                 {!login ? (
                     <>
-                        <p style={{fontFamily: "Arial, sans-serif", color: "#555", fontSize: "19px", lineHeight: "1.6", marginBottom: "30px"}}>
+                        <p className="accueil-texte">
                             Vous devez vous connecter pour accéder au site d'échange.
                             <br/>
                             Connectez-vous pour échanger, découvrir et partager en ligne!
@@ -34,30 +28,30 @@ function Acceuil({ onNavigate }) {
 
                         <button
                             onClick={() => setDialogConnexionOpen(true)}
-                            style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}
+                            className="btn-principal"
                         >
                             Login/Se Connecter
                         </button>
                     </>
                 ) : (
                     <>
-                        <p style={{fontFamily: "Arial, sans-serif", color: "#555", fontSize: "19px", lineHeight: "1.6", marginBottom: "30px"}}>
+                        <p className="accueil-texte">
                             Bienvenue sur mon application, {login.nom}!
                             <br/>
                             Échangez, découvrez et partagez en ligne!.
                         </p>
 
                         {estAdmin(login) ? (
-                            <button onClick={() => onNavigate("admin")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                            <button onClick={() => onNavigate("admin")} className="btn-principal">
                                 Administration
                             </button>
                         ) : (
-                        <div style={{display: "flex", justifyContent: "center", gap: "40px"}}>
-                            <button onClick={() => onNavigate("echanges")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                        <div className="accueil-boutons-groupe">
+                            <button onClick={() => onNavigate("echanges")} className="btn-principal">
                                 Découvrir les échanges
                             </button>
 
-                            <button onClick={() => onNavigate("objets")} style={{background: "linear-gradient(90deg, #1976d2, #7b2cbf)", color: "white", border: "none", padding: "14px 32px", borderRadius: "30px", fontSize: "17px", fontWeight: "bold", cursor: "pointer", boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"}}>
+                            <button onClick={() => onNavigate("objets")} className="btn-principal">
                                 Découvrez les objets
                             </button>
                         </div>

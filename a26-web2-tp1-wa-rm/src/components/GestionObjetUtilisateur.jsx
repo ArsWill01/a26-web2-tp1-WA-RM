@@ -2,6 +2,9 @@ import {useState} from 'react';
 import ModuleObjet from './ModuleObjet.jsx';
 import {useLoginContext} from '../context/LoginContext';
 import {useJournalContext} from '../context/JournalContext';
+import '../styles/objets.css';
+import '../styles/boutons.css';
+import '../styles/titres.css';
 
 function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     const {login} = useLoginContext();
@@ -55,36 +58,18 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
 
     return (
         <div>
-            <h2 style={{fontFamily: "Trebuchet MS, sans-serif", fontSize: "42px", fontWeight: "bold", textAlign: "center", marginBottom: "10px", background: "linear-gradient(90deg, #1976d2, #7b2cbf, #00a896)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent"}}>
+            <h2 className="titre-degrade">
                 Objets
             </h2>
-            <h3 style={{fontFamily: "Arial, sans-serif", textAlign: "center", color: "#666", fontSize: "18px", marginBottom: "30px"}}>Nombre d'objets : {mesObjets.length}</h3>
+            <h3 className="sous-titre">Nombre d'objets : {mesObjets.length}</h3>
 
             {lesMiens && (
-                <div style={{display: "flex", justifyContent: "center", marginBottom: "30px"}}>
-                    <button type="button" onClick={ouvrirAjout} style={{
-                        background: "linear-gradient(90deg, #1976d2, #7b2cbf)",
-                        color: "white",
-                        border: "none",
-                        padding: "14px 32px",
-                        borderRadius: "30px",
-                        fontSize: "17px",
-                        fontWeight: "bold",
-                        cursor: "pointer",
-                        boxShadow: "0 6px 15px rgba(90, 60, 180, 0.3)"
-                    }}>Ajouter</button>
+                <div className="objets-bouton-ajout">
+                    <button type="button" onClick={ouvrirAjout} className="btn-principal">Ajouter</button>
                 </div>
             )}
 
-
-            <div className="gallery" style={{
-                background: "#ffffff",
-                border: "2px solid #e3dcff",
-                borderRadius: "20px",
-                padding: "15px",
-                boxShadow: "0 6px 18px rgba(70, 50, 150, 0.12)",
-                transition: "0.2s"
-            }}>
+            <div className="gallery objets-galerie" >
                 {mesObjets.map((objet) => (
                     <ModuleObjet
                         key={objet.id}
@@ -97,12 +82,12 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
             </div>
 
             {lesMiens && objetEnEdition && (
-                <form key={objetEnEdition.id ?? 'nouveau'} onSubmit={enregistrerObjet} style={{padding: "30px", backgroundColor: "#ffffff", border: "2px solid #000000", borderRadius: "20px", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"}}>
-                    <h3 style={{fontFamily: "Arial, sans-serif", fontSize: "30px", color: "#000000", marginBottom: "35px"}}>
+                <form key={objetEnEdition.id ?? 'nouveau'} onSubmit={enregistrerObjet} className="objet-form">
+                    <h3 className="objet-form-titre">
                         {objetEnEdition.id ? "Modifier l'objet" : "Nouvel objet"}
                     </h3>
 
-                    <label htmlFor="nom" style={{display: "block", fontFamily: "Arial, sans-serif", fontWeight: "bold", color: "#000000", marginBottom: "6px"}}>
+                    <label htmlFor="nom" className="objet-form-label">
                         Nom de l'objet :
                     </label>
 
@@ -111,18 +96,10 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                         id="nom"
                         name="nom"
                         defaultValue={objetEnEdition.nom}
-                        style={{
-                            width: "100%",
-                            padding: "10px",
-                            marginBottom: "20px",
-                            border: "1px solid #000000",
-                            borderRadius: "5px",
-                            fontSize: "16px",
-                            boxSizing: "border-box"
-                        }}
+                        className="objet-form-input"
                     />
 
-                    <label htmlFor="description" style={{display: "block", fontFamily: "Arial, sans-serif", fontWeight: "bold", color: "#000000", marginBottom: "6px"}}>
+                    <label htmlFor="description" className="objet-form-label">
                         Description :
                     </label>
 
@@ -131,18 +108,10 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                         id="description"
                         name="description"
                         defaultValue={objetEnEdition.description}
-                        style={{
-                            width: "100%",
-                            padding: "10px",
-                            marginBottom: "20px",
-                            border: "1px solid #000000",
-                            borderRadius: "5px",
-                            fontSize: "16px",
-                            boxSizing: "border-box"
-                        }}
+                        className="objet-form-input"
                     />
 
-                    <label htmlFor="etat" style={{display: "block", fontFamily: "Arial, sans-serif", fontWeight: "bold", color: "#000000", marginBottom: "6px"}}>
+                    <label htmlFor="etat" className="objet-form-label">
                         État :
                     </label>
 
@@ -151,18 +120,10 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                         id="etat"
                         name="etat"
                         defaultValue={objetEnEdition.etat}
-                        style={{
-                            width: "100%",
-                            padding: "10px",
-                            marginBottom: "20px",
-                            border: "1px solid #000000",
-                            borderRadius: "5px",
-                            fontSize: "16px",
-                            boxSizing: "border-box"
-                        }}
+                        className="objet-form-input"
                     />
 
-                    <label htmlFor="photo" style={{display: "block", fontFamily: "Arial, sans-serif", fontWeight: "bold", color: "#000000", marginBottom: "6px"}}>
+                    <label htmlFor="photo" className="objet-form-label">
                         URL de la photo :
                     </label>
 
@@ -171,18 +132,10 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                         id="photo"
                         name="photo"
                         defaultValue={objetEnEdition.photo}
-                        style={{
-                            width: "100%",
-                            padding: "10px",
-                            marginBottom: "20px",
-                            border: "1px solid #000000",
-                            borderRadius: "5px",
-                            fontSize: "16px",
-                            boxSizing: "border-box"
-                        }}
+                        className="objet-form-input"
                     />
 
-                    <label htmlFor="prix" style={{display: "block", fontFamily: "Arial, sans-serif", fontWeight: "bold", color: "#000000", marginBottom: "6px"}}>
+                    <label htmlFor="prix" className="objet-form-label">
                         Prix :
                     </label>
 
@@ -193,48 +146,15 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                         min="0"
                         step="0.01"
                         defaultValue={objetEnEdition.prix}
-                        style={{
-                            width: "100%",
-                            padding: "10px",
-                            marginBottom: "25px",
-                            border: "1px solid #000000",
-                            borderRadius: "5px",
-                            fontSize: "16px",
-                            boxSizing: "border-box"
-                        }}
+                        className="objet-form-input"
                     />
 
-                    <div style={{display: "flex", justifyContent: "center", gap: "15px"}}>
-                        <button
-                            type="submit"
-                            style={{
-                                backgroundColor: "#000000",
-                                color: "#ffffff",
-                                border: "2px solid #000000",
-                                padding: "11px 25px",
-                                borderRadius: "5px",
-                                fontSize: "16px",
-                                fontWeight: "bold",
-                                cursor: "pointer"
-                            }}
-                        >
+                    <div className="objet-form-actions">
+                        <button type="submit" className="btn-noir">
                             Enregistrer
                         </button>
 
-                        <button
-                            type="button"
-                            onClick={() => setObjetEnEdition(null)}
-                            style={{
-                                backgroundColor: "#ffffff",
-                                color: "#000000",
-                                border: "2px solid #000000",
-                                padding: "11px 25px",
-                                borderRadius: "5px",
-                                fontSize: "16px",
-                                fontWeight: "bold",
-                                cursor: "pointer"
-                            }}
-                        >
+                        <button type="button" onClick={() => setObjetEnEdition(null)} className="btn-blanc-noir">
                             Annuler
                         </button>
                     </div>
