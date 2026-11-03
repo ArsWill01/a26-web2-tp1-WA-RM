@@ -1,16 +1,16 @@
 import {useState} from 'react';
-import ResponsiveAppBar from './components/ResponsiveAppBar';
-import GestionObjetUtilisateur from './components/GestionObjetUtilisateur';
-import SouhaitUtilisateur from './components/SouhaitUtilisateur';
+import ResponsiveAppBar from './components/layout/ResponsiveAppBar.jsx';
+import GestionObjetUtilisateur from './components/objets/GestionObjetUtilisateur.jsx';
+import SouhaitUtilisateur from './components/souhait/SouhaitUtilisateur.jsx';
 import {LoginContext} from './context/LoginContext';
 import {utilisateur} from './scripts/utilisateur';
 import {objets} from './scripts/objets';
 import {souhait} from './scripts/souhait.js';
 import './App.css';
-import Acceuil from "./components/Acceuil.jsx";
-import ModuleEchange from "./components/ModuleEchange.jsx";
+import Acceuil from "./components/acceuil/Acceuil.jsx";
+import ModuleEchange from "./components/echanges/ModuleEchange.jsx";
 import {propositionsInitiales} from "./scripts/echange.js";
-import ModuleAdmin from "./components/ModuleAdmin.jsx";
+import ModuleAdmin from "./components/admin/ModuleAdmin.jsx";
 import {JournalContext, useJournal} from './context/JournalContext';
 
 function App() {
