@@ -16,9 +16,9 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useLoginContext } from '../context/LoginContext';
-import { useJournalContext } from '../context/JournalContext';
-import { aLeDroit, droitsParDefaut, estAdmin, listeDroits } from '../scripts/droits';
+import { useLoginContext } from '../../context/LoginContext.jsx';
+import { useJournalContext } from '../../context/JournalContext.jsx';
+import { aLeDroit, droitsParDefaut, estAdmin, listeDroits } from '../../scripts/droits.js';
 
 // Fait par Claude
 function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {

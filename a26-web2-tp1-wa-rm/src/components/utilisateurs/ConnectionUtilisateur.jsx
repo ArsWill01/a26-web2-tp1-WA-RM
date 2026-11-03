@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useLoginContext } from '../context/LoginContext';
+import { useLoginContext } from '../../context/LoginContext.jsx';
 
 function ConnectionUtilisateur({ open, onClose }) {
     const { connecter } = useLoginContext();

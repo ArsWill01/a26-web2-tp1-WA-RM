@@ -1,9 +1,9 @@
 import {useState} from "react";
-import FormPropositionEchange from './FormPropositionEchange';
-import {aLeDroit} from '../scripts/droits';
-import {useJournalContext} from '../context/JournalContext';
-import '../styles/echanges.css';
-import '../styles/boutons.css';
+import FormPropositionEchange from './FormPropositionEchange.jsx';
+import {aLeDroit} from '../../scripts/droits.js';
+import {useJournalContext} from '../../context/JournalContext.jsx';
+import '../../styles/echanges.css';
+import '../../styles/boutons.css';
 
 function PropositionEchange({proposition, objets, utilisateurs, login, propositions, setPropositions, setObjets, setUtilisateurs,}) {
     const [enContre, setEnContre] = useState(false);

@@ -12,9 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import ConnectionUtilisateur from './ConnectionUtilisateur';
-import { useLoginContext } from '../context/LoginContext';
-import { estAdmin } from '../scripts/droits';
+import ConnectionUtilisateur from '../utilisateurs/ConnectionUtilisateur.jsx';
+import { useLoginContext } from '../../context/LoginContext.jsx';
+import { estAdmin } from '../../scripts/droits.js';
 
 const pages = [
     { nom: 'Échanges', key: 'echanges' },

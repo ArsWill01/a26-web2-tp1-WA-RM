@@ -11,8 +11,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useJournalContext } from '../context/JournalContext';
-import { typesActivite } from '../scripts/activites';
+import { useJournalContext } from '../../context/JournalContext.jsx';
+import { typesActivite } from '../../scripts/activites.js';
 
 const filtresVides = { type: '', utilisateur: '', dateDebut: '', dateFin: '', recherche: '' };
 

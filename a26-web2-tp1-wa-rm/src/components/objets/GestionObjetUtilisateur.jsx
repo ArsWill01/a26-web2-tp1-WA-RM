@@ -1,10 +1,10 @@
 import {useState} from 'react';
 import ModuleObjet from './ModuleObjet.jsx';
-import {useLoginContext} from '../context/LoginContext';
-import {useJournalContext} from '../context/JournalContext';
-import '../styles/objets.css';
-import '../styles/boutons.css';
-import '../styles/titres.css';
+import {useLoginContext} from '../../context/LoginContext.jsx';
+import {useJournalContext} from '../../context/JournalContext.jsx';
+import '../../styles/objets.css';
+import '../../styles/boutons.css';
+import '../../styles/titres.css';
 
 function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     const {login} = useLoginContext();

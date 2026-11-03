@@ -2,12 +2,12 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { useLoginContext } from '../context/LoginContext';
-import { estAdmin } from '../scripts/droits';
-import GestionUtilisateurs from './GestionUtilisateurs';
-import JournalActivites from './JournalActivites';
-import '../styles/admin.css';
-import '../styles/titres.css';
+import { useLoginContext } from '../../context/LoginContext.jsx';
+import { estAdmin } from '../../scripts/droits.js';
+import GestionUtilisateurs from '../utilisateurs/GestionUtilisateurs.jsx';
+import JournalActivites from './JournalActivites.jsx';
+import '../../styles/admin.css';
+import '../../styles/titres.css';
 
 // Fait par Claude
 function ModuleAdmin({ utilisateurs, setUtilisateurs }) {

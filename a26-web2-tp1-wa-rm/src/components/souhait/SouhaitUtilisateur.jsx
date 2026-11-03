@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import {useLoginContext} from '../context/LoginContext';
-import {useJournalContext} from '../context/JournalContext';
-import '../styles/souhaits.css';
-import '../styles/titres.css';
-import '../styles/boutons.css';
+import {useLoginContext} from '../../context/LoginContext.jsx';
+import {useJournalContext} from '../../context/JournalContext.jsx';
+import '../../styles/souhaits.css';
+import '../../styles/titres.css';
+import '../../styles/boutons.css';
 
 function SouhaitUtilisateur({souhaits, setSouhaits}) {
     const {login} = useLoginContext();

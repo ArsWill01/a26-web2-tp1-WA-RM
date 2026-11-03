@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useLoginContext } from '../context/LoginContext';
-import FormPropositionEchange from './FormPropositionEchange';
-import PropositionEchange from './PropositionEchange';
-import { aLeDroit } from '../scripts/droits';
-import '../styles/echanges.css';
-import '../styles/titres.css';
+import { useLoginContext } from '../../context/LoginContext.jsx';
+import FormPropositionEchange from './FormPropositionEchange.jsx';
+import PropositionEchange from './PropositionEchange.jsx';
+import { aLeDroit } from '../../scripts/droits.js';
+import '../../styles/echanges.css';
+import '../../styles/titres.css';
 
 function ModuleEchange({propositions, setPropositions, objets, setObjets, utilisateurs, setUtilisateurs,}) {
     const { login } = useLoginContext();
