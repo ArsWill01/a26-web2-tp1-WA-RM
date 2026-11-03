@@ -15,7 +15,7 @@ function Acceuil({ onNavigate }) {
         <div className="accueil-container">
             <div className="accueil-card">
                 <h1 className="accueil-titre">
-                    Mon site d'échange
+                    Troc-O-Deal
                 </h1>
 
                 {!login ? (

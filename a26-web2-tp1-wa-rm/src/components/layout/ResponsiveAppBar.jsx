@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import HandshakeTwoToneIcon from '@mui/icons-material/HandshakeTwoTone';
 import ConnectionUtilisateur from '../utilisateurs/ConnectionUtilisateur.jsx';
 import { useLoginContext } from '../../context/LoginContext.jsx';
 import { estAdmin } from '../../scripts/droits.js';
@@ -74,10 +75,10 @@ function ResponsiveAppBar({ onNavigate }) {
                 <Toolbar disableGutters>
 
                     {/* Logo du desktop */}
-                    <AdbIcon
+                    <HandshakeTwoToneIcon
                         sx={{
                             display: { xs: 'none', md: 'flex' },
-                            mr: 1,
+                            mr: 3,
                         }}
                     />
 
@@ -100,7 +101,7 @@ function ResponsiveAppBar({ onNavigate }) {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        TROC-O-DEAL
                     </Typography>
 
                     {/* Bar de menu mobile */}
@@ -155,10 +156,10 @@ function ResponsiveAppBar({ onNavigate }) {
                     </Box>
 
                     {/* Logo mobile */}
-                    <AdbIcon
+                    <HandshakeTwoToneIcon
                         sx={{
                             display: { xs: 'flex', md: 'none' },
-                            mr: 1,
+                            mr: 3,
                         }}
                     />
 
