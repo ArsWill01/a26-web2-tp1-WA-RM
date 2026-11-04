@@ -3,8 +3,8 @@ import ModuleObjet from './ModuleObjet.jsx';
 import {useLoginContext} from '../../context/LoginContext.jsx';
 import {useJournalContext} from '../../context/JournalContext.jsx';
 import '../../styles/objets.css';
-import '../../styles/boutons.css';
-import '../../styles/titres.css';
+import '../../styles/theme/boutons.css';
+import '../../styles/theme/titres.css';
 
 function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     const {login} = useLoginContext();

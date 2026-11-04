@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useJournalContext } from '../../context/JournalContext.jsx';
-import { typesActivite } from '../../scripts/activites.js';
+import { typesActivite } from '../../scripts/admin/activites.js';
 
 const filtresVides = { type: '', utilisateur: '', dateDebut: '', dateFin: '', recherche: '' };
 

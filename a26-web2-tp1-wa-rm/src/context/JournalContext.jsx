@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useState } from 'react';
-import { activitesInitiales, typesActivite } from '../scripts/activites';
+import { activitesInitiales, typesActivite } from '../scripts/admin/activites.js';
 
 export const JournalContext = createContext(null);
 

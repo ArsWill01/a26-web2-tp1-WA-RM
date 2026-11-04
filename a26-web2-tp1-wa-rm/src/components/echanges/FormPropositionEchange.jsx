@@ -1,8 +1,8 @@
 import {useState} from "react";
-import {aLeDroit} from "../../scripts/droits.js";
+import {aLeDroit} from "../../scripts/admin/droits.js";
 import {useJournalContext} from "../../context/JournalContext.jsx";
 import '../../styles/echanges.css';
-import '../../styles/boutons.css';
+import '../../styles/theme/boutons.css';
 
 function FormPropositionEchange({mode, propositionOriginale, mesObjets, objetsDesAutres, utilisateurs, propositions, setPropositions, login,}) {
     const [recepteurId, setRecepteurId] = useState(

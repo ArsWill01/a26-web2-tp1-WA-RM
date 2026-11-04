@@ -11,11 +11,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import HandshakeTwoToneIcon from '@mui/icons-material/HandshakeTwoTone';
 import ConnectionUtilisateur from '../utilisateurs/ConnectionUtilisateur.jsx';
 import { useLoginContext } from '../../context/LoginContext.jsx';
-import { estAdmin } from '../../scripts/droits.js';
+import { estAdmin } from '../../scripts/admin/droits.js';
 
 const pages = [
     { nom: 'Échanges', key: 'echanges' },

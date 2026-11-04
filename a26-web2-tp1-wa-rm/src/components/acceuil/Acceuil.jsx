@@ -1,10 +1,10 @@
 import { useLoginContext } from "../../context/LoginContext.jsx"
 import { useState } from "react";
 import ConnectionUtilisateur from "../utilisateurs/ConnectionUtilisateur.jsx";
-import { estAdmin } from "../../scripts/droits";
+import { estAdmin } from "../../scripts/admin/droits.js";
 import '../../styles/acceuil.css';
-import '../../styles/boutons.css';
-import '../../styles/titres.css';
+import '../../styles/theme/boutons.css';
+import '../../styles/theme/titres.css';
 
 function Acceuil({ onNavigate }) {
 

@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLoginContext } from '../../context/LoginContext.jsx';
 import { useJournalContext } from '../../context/JournalContext.jsx';
-import { aLeDroit, droitsParDefaut, estAdmin, listeDroits } from '../../scripts/droits.js';
+import { aLeDroit, droitsParDefaut, estAdmin, listeDroits } from '../../scripts/admin/droits.js';
 
 // Fait par Claude
 function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {
