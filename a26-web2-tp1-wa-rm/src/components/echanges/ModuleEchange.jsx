@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { useLoginContext } from '../../context/LoginContext.jsx';
+import {useState} from 'react';
+import {useLoginContext} from '../../context/LoginContext.jsx';
 import FormPropositionEchange from './FormPropositionEchange.jsx';
 import PropositionEchange from './PropositionEchange.jsx';
-import { aLeDroit } from '../../scripts/admin/droits.js';
+import {aLeDroit} from '../../scripts/admin/droits.js';
 import '../../styles/echanges.css';
 import '../../styles/theme/titres.css';
 
 function ModuleEchange({propositions, setPropositions, objets, setObjets, utilisateurs, setUtilisateurs,}) {
-    const { login } = useLoginContext();
+    const {login} = useLoginContext();
     const peutProposer = aLeDroit(login, 'proposer');
     const [onglet, setOnglet] = useState(peutProposer ? 'proposer' : 'mesEchanges');
 

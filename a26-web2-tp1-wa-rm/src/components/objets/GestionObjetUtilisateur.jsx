@@ -69,7 +69,7 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                 </div>
             )}
 
-            <div className="gallery objets-galerie" >
+            <div className="gallery objets-galerie">
                 {mesObjets.map((objet) => (
                     <ModuleObjet
                         key={objet.id}

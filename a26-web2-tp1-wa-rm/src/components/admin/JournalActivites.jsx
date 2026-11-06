@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,21 +11,21 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useJournalContext } from '../../context/JournalContext.jsx';
-import { typesActivite } from '../../scripts/admin/activites.js';
+import {useJournalContext} from '../../context/JournalContext.jsx';
+import {typesActivite} from '../../scripts/admin/activites.js';
 
-const filtresVides = { type: '', utilisateur: '', dateDebut: '', dateFin: '', recherche: '' };
+const filtresVides = {type: '', utilisateur: '', dateDebut: '', dateFin: '', recherche: ''};
 
 // Fait par Claude
 function JournalActivites() {
-    const { activites } = useJournalContext();
+    const {activites} = useJournalContext();
     const [filtres, setFiltres] = useState(filtresVides);
 
     const nomsUtilisateurs = [...new Set(activites.map((a) => a.utilisateur))].sort();
 
     // Fait par Claude
     function changerFiltre(event) {
-        setFiltres({ ...filtres, [event.target.name]: event.target.value });
+        setFiltres({...filtres, [event.target.name]: event.target.value});
     }
 
     const debut = filtres.dateDebut ? new Date(`${filtres.dateDebut}T00:00:00`) : null;
@@ -42,14 +42,14 @@ function JournalActivites() {
 
     return (
         <Box>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 3 }}>
+            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2, mb: 3}}>
                 <TextField
                     select
                     label="Type"
                     name="type"
                     value={filtres.type}
                     onChange={changerFiltre}
-                    sx={{ minWidth: 220 }}
+                    sx={{minWidth: 220}}
                 >
                     <MenuItem value="">Tous les types</MenuItem>
                     {Object.entries(typesActivite).map(([cle, libelle]) => (
@@ -63,7 +63,7 @@ function JournalActivites() {
                     name="utilisateur"
                     value={filtres.utilisateur}
                     onChange={changerFiltre}
-                    sx={{ minWidth: 180 }}
+                    sx={{minWidth: 180}}
                 >
                     <MenuItem value="">Tous les utilisateurs</MenuItem>
                     {nomsUtilisateurs.map((nom) => (
@@ -77,7 +77,7 @@ function JournalActivites() {
                     name="dateDebut"
                     value={filtres.dateDebut}
                     onChange={changerFiltre}
-                    slotProps={{ inputLabel: { shrink: true } }}
+                    slotProps={{inputLabel: {shrink: true}}}
                 />
 
                 <TextField
@@ -86,7 +86,7 @@ function JournalActivites() {
                     name="dateFin"
                     value={filtres.dateFin}
                     onChange={changerFiltre}
-                    slotProps={{ inputLabel: { shrink: true } }}
+                    slotProps={{inputLabel: {shrink: true}}}
                 />
 
                 <TextField
@@ -94,7 +94,7 @@ function JournalActivites() {
                     name="recherche"
                     value={filtres.recherche}
                     onChange={changerFiltre}
-                    sx={{ flexGrow: 1, minWidth: 200 }}
+                    sx={{flexGrow: 1, minWidth: 200}}
                 />
 
                 <Button variant="outlined" onClick={() => setFiltres(filtresVides)}>
@@ -102,7 +102,7 @@ function JournalActivites() {
                 </Button>
             </Box>
 
-            <Typography sx={{ mb: 1, color: '#666' }}>
+            <Typography sx={{mb: 1, color: '#666'}}>
                 {resultats.length} activité(s) trouvée(s)
             </Typography>
 

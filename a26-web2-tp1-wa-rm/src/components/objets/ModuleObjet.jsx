@@ -1,4 +1,4 @@
-function ModuleObjet({ photo, nom, description, etat, prix, selectionne, onClick, onDelete }) {
+function ModuleObjet({photo, nom, description, etat, prix, selectionne, onClick, onDelete}) {
     function handleSupprimer(event) {
         event.stopPropagation();
         onDelete();

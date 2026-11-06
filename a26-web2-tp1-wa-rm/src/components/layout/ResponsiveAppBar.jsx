@@ -13,23 +13,23 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HandshakeTwoToneIcon from '@mui/icons-material/HandshakeTwoTone';
 import ConnectionUtilisateur from '../utilisateurs/ConnectionUtilisateur.jsx';
-import { useLoginContext } from '../../context/LoginContext.jsx';
-import { estAdmin } from '../../scripts/admin/droits.js';
+import {useLoginContext} from '../../context/LoginContext.jsx';
+import {estAdmin} from '../../scripts/admin/droits.js';
 
 const pages = [
-    { nom: 'Échanges', key: 'echanges' },
-    { nom: 'Mes Objets', key: 'objets' },
-    { nom: 'Souhaits', key: 'souhaits' },
-    { nom: 'Objets Des Autres', key: 'autreObjets' },
+    {nom: 'Échanges', key: 'echanges'},
+    {nom: 'Mes Objets', key: 'objets'},
+    {nom: 'Souhaits', key: 'souhaits'},
+    {nom: 'Objets Des Autres', key: 'autreObjets'},
 ]; // Admin
 const pagesAdmin = [
-    { nom: 'Administration', key: 'admin' },
+    {nom: 'Administration', key: 'admin'},
 ];
 const settingsConnecte = ['Logout'];
 const settingsDeconnecte = ['Login'];
 
-function ResponsiveAppBar({ onNavigate }) {
-    const { login, deconnecter } = useLoginContext();
+function ResponsiveAppBar({onNavigate}) {
+    const {login, deconnecter} = useLoginContext();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [dialogLoginOuvert, setDialogLoginOuvert] = React.useState(false);
@@ -76,7 +76,7 @@ function ResponsiveAppBar({ onNavigate }) {
                     {/* Logo du desktop */}
                     <HandshakeTwoToneIcon
                         sx={{
-                            display: { xs: 'none', md: 'flex' },
+                            display: {xs: 'none', md: 'flex'},
                             mr: 3,
                         }}
                     />
@@ -92,7 +92,7 @@ function ResponsiveAppBar({ onNavigate }) {
                         }}
                         sx={{
                             mr: 2,
-                            display: { xs: 'none', md: 'flex' },
+                            display: {xs: 'none', md: 'flex'},
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
@@ -107,7 +107,7 @@ function ResponsiveAppBar({ onNavigate }) {
                     <Box
                         sx={{
                             flexGrow: 1,
-                            display: { xs: 'flex', md: 'none' },
+                            display: {xs: 'flex', md: 'none'},
                         }}
                     >
                         {login && (
@@ -119,7 +119,7 @@ function ResponsiveAppBar({ onNavigate }) {
                                 onClick={handleOpenNavMenu}
                                 color="inherit"
                             >
-                                <MenuIcon />
+                                <MenuIcon/>
                             </IconButton>
                         )}
 
@@ -138,7 +138,7 @@ function ResponsiveAppBar({ onNavigate }) {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
+                                display: {xs: 'block', md: 'none'},
                             }}
                         >
                             {pagesVisibles.map((page) => (
@@ -146,7 +146,7 @@ function ResponsiveAppBar({ onNavigate }) {
                                     key={page.key}
                                     onClick={() => handleNavigate(page.key)}
                                 >
-                                    <Typography sx={{ textAlign: 'center' }}>
+                                    <Typography sx={{textAlign: 'center'}}>
                                         {page.nom}
                                     </Typography>
                                 </MenuItem>
@@ -157,7 +157,7 @@ function ResponsiveAppBar({ onNavigate }) {
                     {/* Logo mobile */}
                     <HandshakeTwoToneIcon
                         sx={{
-                            display: { xs: 'flex', md: 'none' },
+                            display: {xs: 'flex', md: 'none'},
                             mr: 3,
                         }}
                     />
@@ -173,7 +173,7 @@ function ResponsiveAppBar({ onNavigate }) {
                         }}
                         sx={{
                             mr: 2,
-                            display: { xs: 'flex', md: 'none' },
+                            display: {xs: 'flex', md: 'none'},
                             flexGrow: 1,
                             fontFamily: 'monospace',
                             fontWeight: 700,
@@ -189,7 +189,7 @@ function ResponsiveAppBar({ onNavigate }) {
                     <Box
                         sx={{
                             flexGrow: 1,
-                            display: { xs: 'none', md: 'flex' },
+                            display: {xs: 'none', md: 'flex'},
                         }}
                     >
                         {pagesVisibles.map((page) => (
@@ -208,11 +208,11 @@ function ResponsiveAppBar({ onNavigate }) {
                     </Box>
 
                     {/* User menu */}
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{flexGrow: 0}}>
                         <Tooltip title={login ? login.nom : 'Non connecté'}>
                             <IconButton
                                 onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
+                                sx={{p: 0}}
                             >
                                 <Avatar alt={login ? login.nom : 'Invité'}>
                                     {login ? login.nom[0] : null}
@@ -221,7 +221,7 @@ function ResponsiveAppBar({ onNavigate }) {
                         </Tooltip>
 
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{mt: '45px'}}
                             id="user-menu"
                             anchorEl={anchorElUser}
                             anchorOrigin={{
@@ -241,7 +241,7 @@ function ResponsiveAppBar({ onNavigate }) {
                                     key={setting}
                                     onClick={() => handleLoginMenu(setting)}
                                 >
-                                    <Typography sx={{ textAlign: 'center' }}>
+                                    <Typography sx={{textAlign: 'center'}}>
                                         {setting}
                                     </Typography>
                                 </MenuItem>

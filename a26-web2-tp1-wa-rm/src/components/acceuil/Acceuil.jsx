@@ -1,14 +1,14 @@
-import { useLoginContext } from "../../context/LoginContext.jsx"
-import { useState } from "react";
+import {useLoginContext} from "../../context/LoginContext.jsx"
+import {useState} from "react";
 import ConnectionUtilisateur from "../utilisateurs/ConnectionUtilisateur.jsx";
-import { estAdmin } from "../../scripts/admin/droits.js";
+import {estAdmin} from "../../scripts/admin/droits.js";
 import '../../styles/acceuil.css';
 import '../../styles/theme/boutons.css';
 import '../../styles/theme/titres.css';
 
-function Acceuil({ onNavigate }) {
+function Acceuil({onNavigate}) {
 
-    const { login } = useLoginContext();
+    const {login} = useLoginContext();
     const [dialogConnexionOpen, setDialogConnexionOpen] = useState(false);
 
     return (
@@ -46,15 +46,15 @@ function Acceuil({ onNavigate }) {
                                 Administration
                             </button>
                         ) : (
-                        <div className="accueil-boutons-groupe">
-                            <button onClick={() => onNavigate("echanges")} className="btn-principal">
-                                Découvrir les échanges
-                            </button>
+                            <div className="accueil-boutons-groupe">
+                                <button onClick={() => onNavigate("echanges")} className="btn-principal">
+                                    Découvrir les échanges
+                                </button>
 
-                            <button onClick={() => onNavigate("objets")} className="btn-principal">
-                                Découvrez les objets
-                            </button>
-                        </div>
+                                <button onClick={() => onNavigate("objets")} className="btn-principal">
+                                    Découvrez les objets
+                                </button>
+                            </div>
                         )}
                     </>
                 )}

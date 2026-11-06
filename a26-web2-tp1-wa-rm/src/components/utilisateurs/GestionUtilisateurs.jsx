@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,14 +16,14 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useLoginContext } from '../../context/LoginContext.jsx';
-import { useJournalContext } from '../../context/JournalContext.jsx';
-import { aLeDroit, droitsParDefaut, estAdmin, listeDroits } from '../../scripts/admin/droits.js';
+import {useLoginContext} from '../../context/LoginContext.jsx';
+import {useJournalContext} from '../../context/JournalContext.jsx';
+import {aLeDroit, droitsParDefaut, estAdmin, listeDroits} from '../../scripts/admin/droits.js';
 
 // Fait par Claude
-function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {
-    const { login } = useLoginContext();
-    const { journaliser } = useJournalContext();
+function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
+    const {login} = useLoginContext();
+    const {journaliser} = useJournalContext();
     const [role, setRole] = useState('utilisateur');
     const [erreur, setErreur] = useState('');
 
@@ -46,8 +46,8 @@ function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {
 
         const nouvelId = Math.max(0, ...utilisateurs.map((u) => u.id)) + 1;
         const nouveau = role === 'admin'
-            ? { id: nouvelId, nom, motDePasse, role: 'admin' }
-            : { id: nouvelId, nom, motDePasse, role: 'utilisateur', droits: { ...droitsParDefaut } };
+            ? {id: nouvelId, nom, motDePasse, role: 'admin'}
+            : {id: nouvelId, nom, motDePasse, role: 'utilisateur', droits: {...droitsParDefaut}};
 
         setUtilisateurs([...utilisateurs, nouveau]);
         journaliser(login, 'creation_utilisateur', `${nom} (${role})`);
@@ -72,7 +72,7 @@ function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {
         const accorde = !aLeDroit(utilisateur, droit);
         setUtilisateurs(utilisateurs.map((u) =>
             u.id === utilisateur.id
-                ? { ...u, droits: { ...droitsParDefaut, ...u.droits, [droit]: accorde } }
+                ? {...u, droits: {...droitsParDefaut, ...u.droits, [droit]: accorde}}
                 : u
         ));
         journaliser(
@@ -84,24 +84,24 @@ function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {
 
     return (
         <Box>
-            <Paper component="form" onSubmit={creerUtilisateur} sx={{ p: 3, mb: 4 }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>Créer un compte</Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }}>
-                    <TextField name="nom" label="Nom d'utilisateur" />
-                    <TextField name="motDePasse" label="Mot de passe" type="password" />
+            <Paper component="form" onSubmit={creerUtilisateur} sx={{p: 3, mb: 4}}>
+                <Typography variant="h6" sx={{mb: 2}}>Créer un compte</Typography>
+                <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center'}}>
+                    <TextField name="nom" label="Nom d'utilisateur"/>
+                    <TextField name="motDePasse" label="Mot de passe" type="password"/>
                     <TextField
                         select
                         label="Rôle"
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
-                        sx={{ minWidth: 160 }}
+                        sx={{minWidth: 160}}
                     >
                         <MenuItem value="utilisateur">Utilisateur</MenuItem>
                         <MenuItem value="admin">Admin</MenuItem>
                     </TextField>
                     <Button type="submit" variant="contained">Créer</Button>
                 </Box>
-                {erreur && <Alert severity="error" sx={{ mt: 2 }}>{erreur}</Alert>}
+                {erreur && <Alert severity="error" sx={{mt: 2}}>{erreur}</Alert>}
             </Paper>
 
             <TableContainer component={Paper}>
@@ -143,7 +143,7 @@ function GestionUtilisateurs({ utilisateurs, setUtilisateurs }) {
                                         onClick={() => supprimerUtilisateur(u)}
                                         disabled={u.id === login.id}
                                     >
-                                        <DeleteIcon />
+                                        <DeleteIcon/>
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
