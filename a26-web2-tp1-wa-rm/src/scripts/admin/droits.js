@@ -12,7 +12,7 @@ export const droitsParDefaut = {
 
 // Fait par Claude
 export function estAdmin(utilisateur) {
-    return utilisateur?.role === 'admin';
+    return utilisateur?.role === 'ADMIN';
 }
 
 // Fait par Claude

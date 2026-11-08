@@ -19,6 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useLoginContext} from '../../context/LoginContext.jsx';
 import {useJournalContext} from '../../context/JournalContext.jsx';
 import {aLeDroit, droitsParDefaut, estAdmin, listeDroits} from '../../scripts/admin/droits.js';
+import {addUtilisateur} from "../../scripts/https.js";
 
 // Fait par Claude
 function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
@@ -27,8 +28,8 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
     const [role, setRole] = useState('utilisateur');
     const [erreur, setErreur] = useState('');
 
-    // Fait par Claude
-    function creerUtilisateur(event) {
+    // première version par claude, modifier par Will pour appeller le backend
+    async function creerUtilisateur(event) {
         event.preventDefault();
         setErreur('');
         const formData = new FormData(event.target);
@@ -44,15 +45,32 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
             return;
         }
 
-        const nouvelId = Math.max(0, ...utilisateurs.map((u) => u.id)) + 1;
+        const nouvelId = null;
         const nouveau = role === 'admin'
-            ? {id: nouvelId, nom, motDePasse, role: 'admin'}
-            : {id: nouvelId, nom, motDePasse, role: 'utilisateur', droits: {...droitsParDefaut}};
+            ? {id: nouvelId, nom, motDePasse, role: 'ADMIN'}
+            : {id: nouvelId, nom, motDePasse, role: 'UTILISATEUR', droits: {...droitsParDefaut}};
 
-        setUtilisateurs([...utilisateurs, nouveau]);
+        // addUtilisateur retourne l'utilisateur sauvegarder par le backend
+        const nouvelUtilisateur = await addUtilisateur(nouveau);
+
+        setUtilisateurs([...utilisateurs, nouvelUtilisateur]);
         journaliser(login, 'creation_utilisateur', `${nom} (${role})`);
         event.target.reset();
         setRole('utilisateur');
+    }
+
+    // pas fait par claude
+    async function handleAddUtilisateur(location) {
+        try {
+            const nouveauUuid = await addUserLocation(location);
+            location.uuid = nouveauUuid;
+            setLocations(old => {
+                return [location, ...old];
+            })
+        } catch (e) {
+            console.log('la nouvelle location n\'a pas pu être ajoutée');
+            setError({error: "error", message: e.message});
+        }
     }
 
     // Fait par Claude

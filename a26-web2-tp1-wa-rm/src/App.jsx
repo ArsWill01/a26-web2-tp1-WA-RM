@@ -1,9 +1,9 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import ResponsiveAppBar from './components/layout/ResponsiveAppBar.jsx';
 import GestionObjetUtilisateur from './components/objets/GestionObjetUtilisateur.jsx';
 import SouhaitUtilisateur from './components/souhait/SouhaitUtilisateur.jsx';
 import {LoginContext} from './context/LoginContext';
-import {utilisateur} from './scripts/utilisateur';
+import {fetchAllUtilisateursAsync} from "./scripts/https.js"; 
 import {objets} from './scripts/objets';
 import {souhait} from './scripts/souhait.js';
 import './App.css';
@@ -17,10 +17,28 @@ function App() {
     const [login, setLogin] = useState(null);
     const [page, setPage] = useState('accueil');
     const [listeObjets, setListeObjets] = useState(objets);
-    const [utilisateurs, setUtilisateurs] = useState(utilisateur);
+    const [utilisateurs, setUtilisateurs] = useState([]);
     const [propositions, setPropositions] = useState(propositionsInitiales);
     const [souhaits, setSouhaits] = useState(souhait);
     const {activites, journaliser} = useJournal();
+    //const [error, setError] = useState({error: undefined, message: ""})
+    //const [isFetching, setFetching] = useState(false);
+
+    useEffect(() => {
+        async function fetchData() {
+            //setFetching(true);
+            try {
+                const data = await fetchAllUtilisateursAsync();
+                setUtilisateurs(data);
+            //} catch (error) {
+                //setError({ error: "error", message: error.message });
+            } finally {
+                //setFetching(false)
+            }
+        }
+
+        fetchData();
+    }, [fetchAllUtilisateursAsync]);
 
     const utilisateurCourant = login ? utilisateurs.find((u) => u.id === login.id) : null;
     const loginCourant = utilisateurCourant
