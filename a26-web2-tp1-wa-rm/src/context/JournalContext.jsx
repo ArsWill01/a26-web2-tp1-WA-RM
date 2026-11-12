@@ -22,7 +22,7 @@ export function useJournal() {
             ...prev,
             {
                 id: Math.max(0, ...prev.map((a) => a.id)) + 1,
-                idUtilisateur: utilisateur?.id ?? null,
+                uuidUtilisateur: utilisateur?.uuid ?? null,
                 utilisateur: utilisateur?.nom ?? 'Inconnu',
                 horodate: new Date().toISOString(),
                 type,

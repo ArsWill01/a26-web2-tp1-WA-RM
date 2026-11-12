@@ -19,6 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useLoginContext} from '../../context/LoginContext.jsx';
 import {useJournalContext} from '../../context/JournalContext.jsx';
 import {aLeDroit, droitsParDefaut, estAdmin, listeDroits} from '../../scripts/admin/droits.js';
+import {addUtilisateur} from "../../scripts/https.js";
 
 // Fait par Claude
 function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
@@ -27,8 +28,8 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
     const [role, setRole] = useState('utilisateur');
     const [erreur, setErreur] = useState('');
 
-    // Fait par Claude
-    function creerUtilisateur(event) {
+    // première version par claude, modifier par Will pour appeller le backend
+    async function creerUtilisateur(event) {
         event.preventDefault();
         setErreur('');
         const formData = new FormData(event.target);
@@ -44,26 +45,41 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
             return;
         }
 
-        const nouvelId = Math.max(0, ...utilisateurs.map((u) => u.id)) + 1;
         const nouveau = role === 'admin'
-            ? {id: nouvelId, nom, motDePasse, role: 'admin'}
-            : {id: nouvelId, nom, motDePasse, role: 'utilisateur', droits: {...droitsParDefaut}};
+            ? {nom, motDePasse, role: 'ADMIN'}
+            : {nom, motDePasse, role: 'UTILISATEUR', droits: {...droitsParDefaut}};
 
-        setUtilisateurs([...utilisateurs, nouveau]);
+        const nouveauUuid = await addUtilisateur(nouveau);
+
+        setUtilisateurs([...utilisateurs, {...nouveau, uuid: nouveauUuid}]);
         journaliser(login, 'creation_utilisateur', `${nom} (${role})`);
         event.target.reset();
         setRole('utilisateur');
     }
 
+    // pas fait par claude
+    async function handleAddUtilisateur(location) {
+        try {
+            const nouveauUuid = await addUserLocation(location);
+            location.uuid = nouveauUuid;
+            setLocations(old => {
+                return [location, ...old];
+            })
+        } catch (e) {
+            console.log('la nouvelle location n\'a pas pu être ajoutée');
+            setError({error: "error", message: e.message});
+        }
+    }
+
     // Fait par Claude
     function supprimerUtilisateur(utilisateur) {
-        if (utilisateur.id === login.id) {
+        if (utilisateur.uuid === login.uuid) {
             return;
         }
         if (!window.confirm(`Supprimer ${utilisateur.nom} ?`)) {
             return;
         }
-        setUtilisateurs(utilisateurs.filter((u) => u.id !== utilisateur.id));
+        setUtilisateurs(utilisateurs.filter((u) => u.uuid !== utilisateur.uuid));
         journaliser(login, 'suppression_utilisateur', utilisateur.nom);
     }
 
@@ -71,7 +87,7 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
     function basculerDroit(utilisateur, droit) {
         const accorde = !aLeDroit(utilisateur, droit);
         setUtilisateurs(utilisateurs.map((u) =>
-            u.id === utilisateur.id
+            u.uuid === utilisateur.uuid
                 ? {...u, droits: {...droitsParDefaut, ...u.droits, [droit]: accorde}}
                 : u
         ));
@@ -118,7 +134,7 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
                     </TableHead>
                     <TableBody>
                         {utilisateurs.map((u) => (
-                            <TableRow key={u.id}>
+                            <TableRow key={u.uuid}>
                                 <TableCell>{u.nom}</TableCell>
                                 <TableCell>
                                     <Chip
@@ -141,7 +157,7 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
                                     <IconButton
                                         aria-label={`Supprimer ${u.nom}`}
                                         onClick={() => supprimerUtilisateur(u)}
-                                        disabled={u.id === login.id}
+                                        disabled={u.uuid === login.uuid}
                                     >
                                         <DeleteIcon/>
                                     </IconButton>
