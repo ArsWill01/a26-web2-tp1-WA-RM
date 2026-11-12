@@ -40,10 +40,10 @@ function App() {
         fetchData();
     }, [fetchAllUtilisateursAsync]);
 
-    const utilisateurCourant = login ? utilisateurs.find((u) => u.id === login.id) : null;
+    const utilisateurCourant = login ? utilisateurs.find((u) => u.uuid === login.uuid) : null;
     const loginCourant = utilisateurCourant
         ? {
-            id: utilisateurCourant.id,
+            uuid: utilisateurCourant.uuid,
             nom: utilisateurCourant.nom,
             role: utilisateurCourant.role,
             droits: utilisateurCourant.droits,
@@ -61,7 +61,7 @@ function App() {
             return false;
         }
 
-        setLogin({id: trouve.id, nom: trouve.nom});
+        setLogin({uuid: trouve.uuid, nom: trouve.nom});
         journaliser(trouve, 'connexion');
         return true;
     };

@@ -45,15 +45,13 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
             return;
         }
 
-        const nouvelId = null;
         const nouveau = role === 'admin'
-            ? {id: nouvelId, nom, motDePasse, role: 'ADMIN'}
-            : {id: nouvelId, nom, motDePasse, role: 'UTILISATEUR', droits: {...droitsParDefaut}};
+            ? {nom, motDePasse, role: 'ADMIN'}
+            : {nom, motDePasse, role: 'UTILISATEUR', droits: {...droitsParDefaut}};
 
-        // addUtilisateur retourne l'utilisateur sauvegarder par le backend
-        const nouvelUtilisateur = await addUtilisateur(nouveau);
+        const nouveauUuid = await addUtilisateur(nouveau);
 
-        setUtilisateurs([...utilisateurs, nouvelUtilisateur]);
+        setUtilisateurs([...utilisateurs, {...nouveau, uuid: nouveauUuid}]);
         journaliser(login, 'creation_utilisateur', `${nom} (${role})`);
         event.target.reset();
         setRole('utilisateur');
@@ -75,13 +73,13 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
 
     // Fait par Claude
     function supprimerUtilisateur(utilisateur) {
-        if (utilisateur.id === login.id) {
+        if (utilisateur.uuid === login.uuid) {
             return;
         }
         if (!window.confirm(`Supprimer ${utilisateur.nom} ?`)) {
             return;
         }
-        setUtilisateurs(utilisateurs.filter((u) => u.id !== utilisateur.id));
+        setUtilisateurs(utilisateurs.filter((u) => u.uuid !== utilisateur.uuid));
         journaliser(login, 'suppression_utilisateur', utilisateur.nom);
     }
 
@@ -89,7 +87,7 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
     function basculerDroit(utilisateur, droit) {
         const accorde = !aLeDroit(utilisateur, droit);
         setUtilisateurs(utilisateurs.map((u) =>
-            u.id === utilisateur.id
+            u.uuid === utilisateur.uuid
                 ? {...u, droits: {...droitsParDefaut, ...u.droits, [droit]: accorde}}
                 : u
         ));
@@ -136,7 +134,7 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
                     </TableHead>
                     <TableBody>
                         {utilisateurs.map((u) => (
-                            <TableRow key={u.id}>
+                            <TableRow key={u.uuid}>
                                 <TableCell>{u.nom}</TableCell>
                                 <TableCell>
                                     <Chip
@@ -159,7 +157,7 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
                                     <IconButton
                                         aria-label={`Supprimer ${u.nom}`}
                                         onClick={() => supprimerUtilisateur(u)}
-                                        disabled={u.id === login.id}
+                                        disabled={u.uuid === login.uuid}
                                     >
                                         <DeleteIcon/>
                                     </IconButton>

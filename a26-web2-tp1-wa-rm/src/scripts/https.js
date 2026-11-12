@@ -23,5 +23,5 @@ export async function addUtilisateur(utilisateur) {
         const raison = await response.json();
         throw new Error('L\'utilisateur n\'a pas pu être créée' + raison.message);
     }
-    return await response.json();
+    return await response.text();
 }
