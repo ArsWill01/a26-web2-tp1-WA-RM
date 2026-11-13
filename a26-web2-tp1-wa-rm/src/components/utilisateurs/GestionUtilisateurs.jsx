@@ -19,7 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useLoginContext} from '../../context/LoginContext.jsx';
 import {useJournalContext} from '../../context/JournalContext.jsx';
 import {aLeDroit, droitsParDefaut, estAdmin, listeDroits} from '../../scripts/admin/droits.js';
-import {addUtilisateur} from "../../scripts/https.js";
+import {addUtilisateur, deleteUtilisateur, updateUtilisateur} from "../../scripts/https.js";
 
 // Fait par Claude
 function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
@@ -57,39 +57,28 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
         setRole('utilisateur');
     }
 
-    // pas fait par claude
-    async function handleAddUtilisateur(location) {
-        try {
-            const nouveauUuid = await addUserLocation(location);
-            location.uuid = nouveauUuid;
-            setLocations(old => {
-                return [location, ...old];
-            })
-        } catch (e) {
-            console.log('la nouvelle location n\'a pas pu être ajoutée');
-            setError({error: "error", message: e.message});
-        }
-    }
-
-    // Fait par Claude
-    function supprimerUtilisateur(utilisateur) {
+    // Fait par Claude (partie 1) modifier par moi (partie 2)
+    async function supprimerUtilisateur(utilisateur) {
         if (utilisateur.uuid === login.uuid) {
             return;
         }
         if (!window.confirm(`Supprimer ${utilisateur.nom} ?`)) {
             return;
         }
+        await deleteUtilisateur(utilisateur.uuid);
         setUtilisateurs(utilisateurs.filter((u) => u.uuid !== utilisateur.uuid));
         journaliser(login, 'suppression_utilisateur', utilisateur.nom);
     }
 
     // Fait par Claude
-    function basculerDroit(utilisateur, droit) {
+    async function basculerDroit(utilisateur, droit) {
         const accorde = !aLeDroit(utilisateur, droit);
-        setUtilisateurs(utilisateurs.map((u) =>
-            u.uuid === utilisateur.uuid
-                ? {...u, droits: {...droitsParDefaut, ...u.droits, [droit]: accorde}}
-                : u
+        const modifie = {...utilisateur, droits: {...droitsParDefaut, ...utilisateur.droits, [droit]: accorde}};
+        await updateUtilisateur(modifie);
+        setUtilisateurs(utilisateurs.map((utilisateur) =>
+            utilisateur.uuid === utilisateur.uuid
+                ? modifie
+                : utilisateur
         ));
         journaliser(
             login,

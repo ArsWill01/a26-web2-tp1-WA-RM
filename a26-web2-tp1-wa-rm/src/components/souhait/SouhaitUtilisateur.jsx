@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {useLoginContext} from '../../context/LoginContext.jsx';
 import {useJournalContext} from '../../context/JournalContext.jsx';
+import {addSouhait, deleteSouhait, updateSouhait} from '../../scripts/https.js';
 import '../../styles/souhaits.css';
 import '../../styles/theme/titres.css';
 import '../../styles/theme/boutons.css';
@@ -10,37 +11,58 @@ function SouhaitUtilisateur({souhaits, setSouhaits}) {
     const {journaliser} = useJournalContext();
     const [mesSouhaits, setMesSouhaits] = useState(() =>
         souhaits
-            .filter((souhait) => souhait.idUtilisateur === login?.id)
-            .map((souhait) => ({id: souhait.id, description: souhait.description}))
+            .filter((souhait) => souhait.uuidUtilisateur === login?.uuid)
+            .map((souhait) => ({id: souhait.uuid, uuid: souhait.uuid, description: souhait.description}))
     );
 
     function ajouterSouhait() {
-        const nouvelId = Math.max(0, ...souhaits.map((souhait) => souhait.id)) + 1;
-        setMesSouhaits([...mesSouhaits, {id: {nouvelId}, description: ''}]);
+        // id est ma clé, je met un uuid temporaire dans le id
+        setMesSouhaits([...mesSouhaits, {id: crypto.randomUUID(), uuid: null, description: ''}]);
     }
 
     function supprimerSouhait(id) {
         setMesSouhaits(mesSouhaits.filter((souhait) => souhait.id !== id));
     }
 
-    function enregistrerSouhaits(event) {
+    // DÉBUT AVEC CLAUDE
+
+    // je ne savais pas comment trouver les différence quand je fais un save (update/create/delete)
+    // j'aurais du faire comme objet, avec une liste de souhait et un form pour faire le enregistrer.
+    async function enregistrerSouhaits(event) {
         event.preventDefault();
         const descriptions = new FormData(event.target)
             .getAll('description')
-            .map((description) => description.trim())
-            .filter((description) => description !== '');
+            .map((description) => description.trim());
+        const lignes = mesSouhaits
+            .map((ligne, index) => ({...ligne, description: descriptions[index]}))
+            .filter((ligne) => ligne.description !== '');
 
-        const autres = souhaits.filter((souhait) => souhait.idUtilisateur !== login.id);
-        let nouvelId = Math.max(0, ...souhaits.map((souhait) => souhait.id));
-        const miens = descriptions.map((description) => ({
-            id: ++nouvelId,
-            idUtilisateur: login.id,
-            description,
-        }));
+        const anciens = souhaits.filter((souhait) => souhait.uuidUtilisateur === login.uuid);
+        for (const ancien of anciens) {
+            if (!lignes.some((ligne) => ligne.uuid === ancien.uuid)) {
+                await deleteSouhait(ancien.uuid);
+            }
+        }
 
+        const miens = [];
+        for (const ligne of lignes) {
+            let uuid = ligne.uuid;
+            if (uuid) {
+                if (anciens.find((ancien) => ancien.uuid === uuid)?.description !== ligne.description) {
+                    await updateSouhait(login.uuid, {uuid, description: ligne.description});
+                }
+            } else {
+                uuid = await addSouhait(login.uuid, {description: ligne.description});
+            }
+            miens.push({uuid, uuidUtilisateur: login.uuid, description: ligne.description});
+        }
+
+        // FIN DE LA PARTIE AVEC CLAUDE
+
+        const autres = souhaits.filter((souhait) => souhait.uuidUtilisateur !== login.uuid);
         setSouhaits([...autres, ...miens]);
         journaliser(login, 'modification_souhaits', `${miens.length} souhait(s)`);
-        setMesSouhaits(miens.map((souhait) => ({id: souhait.id, description: souhait.description})));
+        setMesSouhaits(miens.map((souhait) => ({id: souhait.uuid, uuid: souhait.uuid, description: souhait.description})));
     }
 
     return (
