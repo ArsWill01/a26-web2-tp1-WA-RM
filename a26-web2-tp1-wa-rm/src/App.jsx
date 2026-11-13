@@ -3,9 +3,7 @@ import ResponsiveAppBar from './components/layout/ResponsiveAppBar.jsx';
 import GestionObjetUtilisateur from './components/objets/GestionObjetUtilisateur.jsx';
 import SouhaitUtilisateur from './components/souhait/SouhaitUtilisateur.jsx';
 import {LoginContext} from './context/LoginContext';
-import {fetchAllUtilisateursAsync} from "./scripts/https.js"; 
-import {objets} from './scripts/objets';
-import {souhait} from './scripts/souhait.js';
+import {fetchAllObjetsAsync, fetchAllSouhaitsAsync, fetchAllUtilisateursAsync} from "./scripts/https.js";
 import './App.css';
 import Acceuil from "./components/acceuil/Acceuil.jsx";
 import ModuleEchange from "./components/echanges/ModuleEchange.jsx";
@@ -16,10 +14,10 @@ import {JournalContext, useJournal} from './context/JournalContext';
 function App() {
     const [login, setLogin] = useState(null);
     const [page, setPage] = useState('accueil');
-    const [listeObjets, setListeObjets] = useState(objets);
+    const [listeObjets, setListeObjets] = useState([]);
     const [utilisateurs, setUtilisateurs] = useState([]);
     const [propositions, setPropositions] = useState(propositionsInitiales);
-    const [souhaits, setSouhaits] = useState(souhait);
+    const [souhaits, setSouhaits] = useState([]);
     const {activites, journaliser} = useJournal();
     //const [error, setError] = useState({error: undefined, message: ""})
     //const [isFetching, setFetching] = useState(false);
@@ -30,6 +28,8 @@ function App() {
             try {
                 const data = await fetchAllUtilisateursAsync();
                 setUtilisateurs(data);
+                setListeObjets(await fetchAllObjetsAsync());
+                setSouhaits(await fetchAllSouhaitsAsync());
             //} catch (error) {
                 //setError({ error: "error", message: error.message });
             } finally {

@@ -2,6 +2,7 @@ import {useState} from 'react';
 import ModuleObjet from './ModuleObjet.jsx';
 import {useLoginContext} from '../../context/LoginContext.jsx';
 import {useJournalContext} from '../../context/JournalContext.jsx';
+import {addObjet, deleteObjet, updateObjet} from '../../scripts/https.js';
 import '../../styles/objets.css';
 import '../../styles/theme/boutons.css';
 import '../../styles/theme/titres.css';
@@ -11,7 +12,7 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     const {journaliser} = useJournalContext();
     const [objetEnEdition, setObjetEnEdition] = useState(null);
     const mesObjets = objets.filter((objet) =>
-        lesMiens ? objet.idUtilisateur === login?.id : objet.idUtilisateur !== login?.id
+        lesMiens ? objet.uuidUtilisateur === login?.uuid : objet.uuidUtilisateur !== login?.uuid
     );
 
     // set objet avec des valeurs vides
@@ -20,7 +21,7 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     }
 
     // fait un update ou un ajout
-    function enregistrerObjet(event) {
+    async function enregistrerObjet(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
 
@@ -32,14 +33,15 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
             prix: Number(formData.get('prix')),
         };
 
-        if (objetEnEdition.id) {
+        if (objetEnEdition.uuid) {
+            await updateObjet(login.uuid, {...objetEnEdition, ...valeurs});
             setObjets(objets.map((objet) =>
-                objet.id === objetEnEdition.id ? {...objet, ...valeurs} : objet
+                objet.uuid === objetEnEdition.uuid ? {...objet, ...valeurs} : objet
             ));
             journaliser(login, 'modification_item', valeurs.nom);
         } else {
-            const nouvelId = Math.max(0, ...objets.map((objet) => objet.id)) + 1;
-            setObjets([...objets, {id: nouvelId, idUtilisateur: login.id, ...valeurs}]);
+            const nouveauUuid = await addObjet(login.uuid, valeurs);
+            setObjets([...objets, {uuid: nouveauUuid, uuidUtilisateur: login.uuid, ...valeurs}]);
             journaliser(login, 'ajout_item', valeurs.nom);
         }
 
@@ -47,11 +49,12 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     }
 
     // supprime un objet
-    function supprimerObjet(id) {
-        journaliser(login, 'retrait_item', objets.find((objet) => objet.id === id)?.nom ?? `#${id}`);
-        setObjets(objets.filter((objet) => objet.id !== id));
+    async function supprimerObjet(uuid) {
+        await deleteObjet(uuid);
+        journaliser(login, 'retrait_item', objets.find((objet) => objet.uuid === uuid)?.nom ?? `#${uuid}`);
+        setObjets(objets.filter((objet) => objet.uuid !== uuid));
 
-        if (objetEnEdition?.id === id) {
+        if (objetEnEdition?.uuid === uuid) {
             setObjetEnEdition(null);
         }
     }
@@ -72,19 +75,19 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
             <div className="gallery objets-galerie">
                 {mesObjets.map((objet) => (
                     <ModuleObjet
-                        key={objet.id}
+                        key={objet.uuid}
                         {...objet}
-                        selectionne={objetEnEdition?.id === objet.id}
+                        selectionne={objetEnEdition?.uuid === objet.uuid}
                         onClick={lesMiens ? () => setObjetEnEdition(objet) : undefined}
-                        onDelete={lesMiens ? () => supprimerObjet(objet.id) : undefined}
+                        onDelete={lesMiens ? () => supprimerObjet(objet.uuid) : undefined}
                     />
                 ))}
             </div>
 
             {lesMiens && objetEnEdition && (
-                <form key={objetEnEdition.id ?? 'nouveau'} onSubmit={enregistrerObjet} className="objet-form">
+                <form key={objetEnEdition.uuid ?? 'nouveau'} onSubmit={enregistrerObjet} className="objet-form">
                     <h3 className="objet-form-titre">
-                        {objetEnEdition.id ? "Modifier l'objet" : "Nouvel objet"}
+                        {objetEnEdition.uuid ? "Modifier l'objet" : "Nouvel objet"}
                     </h3>
 
                     <label htmlFor="nom" className="objet-form-label">
