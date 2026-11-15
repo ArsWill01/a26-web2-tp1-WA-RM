@@ -11,12 +11,14 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
     const {login} = useLoginContext();
     const {journaliser} = useJournalContext();
     const [objetEnEdition, setObjetEnEdition] = useState(null);
+    const [erreur, setErreur] = useState('');
     const mesObjets = objets.filter((objet) =>
         lesMiens ? objet.uuidUtilisateur === login?.uuid : objet.uuidUtilisateur !== login?.uuid
     );
 
     // set objet avec des valeurs vides
     function ouvrirAjout() {
+        setErreur('');
         setObjetEnEdition({nom: '', description: '', etat: '', photo: '', prix: ''});
     }
 
@@ -33,16 +35,22 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
             prix: Number(formData.get('prix')),
         };
 
-        if (objetEnEdition.uuid) {
-            await updateObjet(login.uuid, {...objetEnEdition, ...valeurs});
-            setObjets(objets.map((objet) =>
-                objet.uuid === objetEnEdition.uuid ? {...objet, ...valeurs} : objet
-            ));
-            journaliser(login, 'modification_item', valeurs.nom);
-        } else {
-            const nouveauUuid = await addObjet(login.uuid, valeurs);
-            setObjets([...objets, {uuid: nouveauUuid, uuidUtilisateur: login.uuid, ...valeurs}]);
-            journaliser(login, 'ajout_item', valeurs.nom);
+        setErreur('');
+        try {
+            if (objetEnEdition.uuid) {
+                await updateObjet(login.uuid, {...objetEnEdition, ...valeurs});
+                setObjets(objets.map((objet) =>
+                    objet.uuid === objetEnEdition.uuid ? {...objet, ...valeurs} : objet
+                ));
+                journaliser(login, 'modification_item', valeurs.nom);
+            } else {
+                const nouveauUuid = await addObjet(login.uuid, valeurs);
+                setObjets([...objets, {uuid: nouveauUuid, uuidUtilisateur: login.uuid, ...valeurs}]);
+                journaliser(login, 'ajout_item', valeurs.nom);
+            }
+        } catch (e) {
+            setErreur(e.message);
+            return;
         }
 
         setObjetEnEdition(null);
@@ -78,7 +86,10 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                         key={objet.uuid}
                         {...objet}
                         selectionne={objetEnEdition?.uuid === objet.uuid}
-                        onClick={lesMiens ? () => setObjetEnEdition(objet) : undefined}
+                        onClick={lesMiens ? () => {
+                            setErreur('');
+                            setObjetEnEdition(objet);
+                        } : undefined}
                         onDelete={lesMiens ? () => supprimerObjet(objet.uuid) : undefined}
                     />
                 ))}
@@ -161,6 +172,8 @@ function GestionObjetUtilisateur({objets, setObjets, lesMiens}) {
                             Annuler
                         </button>
                     </div>
+
+                    {erreur && <p className="objet-form-erreur">{erreur}</p>}
                 </form>
             )}
         </div>

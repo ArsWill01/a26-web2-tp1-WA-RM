@@ -1,3 +1,12 @@
+async function erreurBackend(response, texte) {
+    try {
+        const raison = await response.json();
+        return new Error(raison.message ? `${texte} : ${raison.message}` : texte);
+    } catch {
+        return new Error(texte);
+    }
+}
+
 export async function fetchAllUtilisateursAsync() {
     const response = await fetch('http://localhost:8080/utilisateurs');
 
@@ -20,8 +29,7 @@ export async function addUtilisateur(utilisateur) {
         }
     );
     if (!response.ok) {
-        const raison = await response.json();
-        throw new Error('L\'utilisateur n\'a pas pu être créée' + raison.message);
+        throw await erreurBackend(response, 'L\'utilisateur n\'a pas pu être créé');
     }
     return await response.text();
 }
@@ -38,7 +46,7 @@ export async function updateUtilisateur(utilisateur) {
         }
     );
     if (!response.ok) {
-        throw new Error('L\'utilisateur n\'a pas pu être modifié');
+        throw await erreurBackend(response, 'L\'utilisateur n\'a pas pu être modifié');
     }
 }
 
@@ -75,7 +83,7 @@ export async function addObjet(uuidUtilisateur, objet) {
         }
     );
     if (!response.ok) {
-        throw new Error('L\'objet n\'a pas pu être créé');
+        throw await erreurBackend(response, 'L\'objet n\'a pas pu être créé');
     }
     return await response.text();
 }
@@ -92,7 +100,7 @@ export async function updateObjet(uuidUtilisateur, objet) {
         }
     );
     if (!response.ok) {
-        throw new Error('L\'objet n\'a pas pu être modifié');
+        throw await erreurBackend(response, 'L\'objet n\'a pas pu être modifié');
     }
 }
 
@@ -129,7 +137,7 @@ export async function addSouhait(uuidUtilisateur, souhait) {
         }
     );
     if (!response.ok) {
-        throw new Error('Le souhait n\'a pas pu être créé');
+        throw await erreurBackend(response, 'Le souhait n\'a pas pu être créé');
     }
     return await response.text();
 }
@@ -146,7 +154,7 @@ export async function updateSouhait(uuidUtilisateur, souhait) {
         }
     );
     if (!response.ok) {
-        throw new Error('Le souhait n\'a pas pu être modifié');
+        throw await erreurBackend(response, 'Le souhait n\'a pas pu être modifié');
     }
 }
 
@@ -157,6 +165,6 @@ export async function deleteSouhait(uuid) {
         }
     );
     if (!response.ok) {
-        throw new Error('Le souhait n\'a pas pu être supprimé');
+        throw await erreurBackend(response, 'Le souhait n\'a pas pu être supprimé');
     }
 }

@@ -57,3 +57,9 @@
     justify-content: center;
     gap: 15px;
 }
+
+.objet-form-erreur {
+    color: red;
+    text-align: center;
+    white-space: pre-line;
+}
