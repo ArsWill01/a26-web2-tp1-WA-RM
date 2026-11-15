@@ -14,6 +14,7 @@ function SouhaitUtilisateur({souhaits, setSouhaits}) {
             .filter((souhait) => souhait.uuidUtilisateur === login?.uuid)
             .map((souhait) => ({id: souhait.uuid, uuid: souhait.uuid, description: souhait.description}))
     );
+    const [erreur, setErreur] = useState('');
 
     function ajouterSouhait() {
         // id est ma clé, je met un uuid temporaire dans le id
@@ -30,6 +31,15 @@ function SouhaitUtilisateur({souhaits, setSouhaits}) {
     // j'aurais du faire comme objet, avec une liste de souhait et un form pour faire le enregistrer.
     async function enregistrerSouhaits(event) {
         event.preventDefault();
+        setErreur('');
+        try {
+            await sauvegarderSouhaits(event);
+        } catch (e) {
+            setErreur(e.message);
+        }
+    }
+
+    async function sauvegarderSouhaits(event) {
         const descriptions = new FormData(event.target)
             .getAll('description')
             .map((description) => description.trim());
@@ -90,6 +100,7 @@ function SouhaitUtilisateur({souhaits, setSouhaits}) {
                         Enregistrer
                     </button>
                 </div>
+                {erreur && <p className="souhaits-erreur">{erreur}</p>}
             </form>
         </div>
     );

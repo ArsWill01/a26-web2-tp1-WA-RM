@@ -49,7 +49,13 @@ function GestionUtilisateurs({utilisateurs, setUtilisateurs}) {
             ? {nom, motDePasse, role: 'ADMIN'}
             : {nom, motDePasse, role: 'UTILISATEUR', droits: {...droitsParDefaut}};
 
-        const nouveauUuid = await addUtilisateur(nouveau);
+        let nouveauUuid;
+        try {
+            nouveauUuid = await addUtilisateur(nouveau);
+        } catch (e) {
+            setErreur(e.message);
+            return;
+        }
 
         setUtilisateurs([...utilisateurs, {...nouveau, uuid: nouveauUuid}]);
         journaliser(login, 'creation_utilisateur', `${nom} (${role})`);

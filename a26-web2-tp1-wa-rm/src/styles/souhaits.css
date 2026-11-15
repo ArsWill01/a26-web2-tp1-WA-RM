@@ -20,3 +20,9 @@
     display: flex;
     justify-content: center;
 }
+
+.souhaits-erreur {
+    color: red;
+    text-align: center;
+    white-space: pre-line;
+}
